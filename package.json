@@ -1,0 +1,34 @@
+{
+  "name": "pingoo",
+  "version": "1.0.0",
+  "description": "for Pingoo - Hybrid Messaging App",
+  "keywords": [
+    "Rahi",
+    "Bisakto-Rahi",
+    "pingoo",
+    "messaging",
+    "hybrid"
+  ],
+  "homepage": "https://github.com/Rahi-007/Pingoo#readme",
+  "bugs": {
+    "url": "https://github.com/Rahi-007/Pingoo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rahi-007/Pingoo.git"
+  },
+  "license": "MIT",
+  "author": "Bisakto-Rahi",
+  "directories": {
+    "front": "frontend",
+    "back": "backend",
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix apps/frontend\" \"npm run start:dev --prefix apps/backend\"",
+    "format": "concurrently \"npm run format --prefix apps/backend\" \"npm run format --prefix apps/frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pingoo - Database Design</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .entity-diagram {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow-x: auto;
+            white-space: pre;
+            border: 1px solid #dee2e6;
+        }
+        
+        .entity-diagram .entity {
+            color: #0d6efd;
+            font-weight: bold;
+        }
+        
+        .entity-diagram .relationship {
+            color: #198754;
+        }
+        
+        .entity-diagram .attribute {
+            color: #6c757d;
+        }
+        
+        .entity-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #0d6efd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .entity-card h4 {
+            margin-top: 0;
+            color: #0d6efd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .entity-card ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .entity-card li {
+            margin: 5px 0;
+        }
+        
+        .index-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .index-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .index-card h5 {
+            margin-top: 0;
+            color: #198754;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .phase-timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+        
+        .phase-timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #0d6efd;
+        }
+        
+        .phase-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 20px;
+        }
+        
+        .phase-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #0d6efd;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #0d6efd;
+        }
+        
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .phase-header h4 {
+            margin: 0;
+            color: #0d6efd;
+        }
+        
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .security-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .security-item h5 {
+            margin-top: 0;
+            color: #dc3545;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>Pingoo</h1>
+                <span class="tagline">Database Design</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="architecture.html"><i class="fas fa-sitemap"></i> Architecture</a>
+                <a href="database.html" class="active"><i class="fas fa-database"></i> Database</a>
+                <a href="api.html"><i class="fas fa-code"></i> API</a>
+                <a href="features.html"><i class="fas fa-star"></i> Features</a>
+                <a href="tech-stack.html"><i class="fas fa-layer-group"></i> Tech Stack</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h2><i class="fas fa-database"></i> Database Schema & Design</h2>
+                <p class="subtitle">Complete entity relationship diagram, indexes, and migration strategy for Pingoo messaging application</p>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-project-diagram"></i> Entity Relationship Diagram</h3>
+                <div class="entity-diagram">
+┌─────────────────────────────────────────────────────────────────────────┐
+│                                  User                                    │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │ id (PK), email, phone, username, password, displayName, bio,    │    │
+│  │ profilePicture, isOnline, lastSeen, isVerified, theme, etc.     │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│      │            │            │            │            │               │
+│      │ 1:N        │ 1:N        │ 1:N        │ 1:N        │ 1:N           │
+│      ▼            ▼            ▼            ▼            ▼               │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐       │
+│  │ Contact │  │ Blocked │  │ Message │  │ Status  │  │  Call   │       │
+│  └─────────┘  │  User   │  └─────────┘  └─────────┘  └─────────┘       │
+│               └─────────┘                                                │
+│                  │                                                       │
+│                  │                                                       │
+└──────────────────┼───────────────────────────────────────────────────────┘
+                   │
+                   │
+┌──────────────────┼───────────────────────────────────────────────────────┐
+│             ┌─────────┐                                                  │
+│             │  Chat   │                                                  │
+│             └─────────┘                                                  │
+│                │ 1:N                                                     │
+│                ▼                                                         │
+│          ┌─────────────┐                                                │
+│          │ ChatMember  │                                                │
+│          └─────────────┘                                                │
+│                │                                                         │
+│                │                                                         │
+│          ┌─────┴─────┐                                                  │
+│          ▼           ▼                                                   │
+│    ┌─────────┐ ┌─────────┐                                              │
+│    │  Group  │ │ Channel │                                              │
+│    └─────────┘ └─────────┘                                              │
+│                                                                          │
+│    ┌─────────────────────────────────────────────────────────────────┐   │
+│    │                         Message                                 │   │
+│    │  ┌─────────────────────────────────────────────────────────┐   │   │
+│    │  │ id (PK), chatId, senderId, content, messageType, etc.   │   │   │
+│    │  └─────────────────────────────────────────────────────────┘   │   │
+│    │        │              │              │                          │   │
+│    │        │ 1:N          │ 1:N          │ 1:N                      │   │
+│    │        ▼              ▼              ▼                          │   │
+│    │  ┌──────────┐  ┌────────────┐  ┌──────────┐                    │   │
+│    │  │ Reaction │  │ReadReceipt │  │  Pinned  │                    │   │
+│    │  └──────────┘  └────────────┘  │ Message  │                    │   │
+│    │                                 └──────────┘                    │   │
+│    └─────────────────────────────────────────────────────────────────┘   │
+└──────────────────────────────────────────────────────────────────────────┘
+                </div>
+                <p class="note"><i class="fas fa-info-circle"></i> <strong>Note:</strong> This diagram shows the core entities and their relationships in the Pingoo messaging system.</p>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-link"></i> Key Relationships</h3>
+                
+                <div class="entity-card">
+                    <h4><i class="fas fa-user"></i> 1. User Relationships</h4>
+                    <ul>
+                        <li><strong>User → Contact</strong>: One user can have many contacts</li>
+                        <li><strong>User → BlockedUser</strong>: One user can block many users</li>
+                        <li><strong>User → ChatMember</strong>: One user can be a member of many chats</li>
+                        <li><strong>User → Message</strong>: One user can send many messages</li>
+                        <li><strong>User → Status</strong>: One user can have many statuses</li>
+                        <li><strong>User → Call</strong>: One user can make/receive many calls</li>
+                    </ul>
+                </div>
+                
+                <div class="entity-card">
+                    <h4><i class="fas fa-comments"></i> 2. Chat Relationships</h4>
+                    <ul>
+                        <li><strong>Chat → ChatMember</strong>: One chat can have many members</li>
+                        <li><strong>Chat → Message</strong>: One chat can have many messages</li>
+                        <li><strong>Chat → PinnedMessage</strong>: One chat can have many pinned messages</li>
+                        <li><strong>Chat → Group/Channel</strong>: One-to-one relationship with specialized chat types</li>
+                    </ul>
+                </div>
+                
+                <div class="entity-card">
+                    <h4><i class="fas fa-envelope"></i> 3. Message Relationships</h4>
+                    <ul>
+                        <li><strong>Message → Reaction</strong>: One message can have many reactions</li>
+                        <li><strong>Message → ReadReceipt</strong>: One message can have many read receipts</li>
+                        <li><strong>Message → Message</strong> (self-reference): For reply functionality</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-tachometer-alt"></i> Indexes for Performance</h3>
+                <div class="index-grid">
+                    <div class="index-card">
+                        <h5><i class="fas fa-users"></i> User Table</h5>
+                        <ul>
+                            <li><code>email</code> (unique) - For email-based login</li>
+                            <li><code>phone</code> (unique) - For phone-based login (WhatsApp style)</li>
+                            <li><code>username</code> (unique) - For Telegram-style username login</li>
+                            <li><code>isOnline</code> - For quick online status queries</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="index-card">
+                        <h5><i class="fas fa-comments"></i> Chat Table</h5>
+                        <ul>
+                            <li><code>type</code> - For filtering by chat type</li>
+                            <li><code>lastMessageAt</code> - For sorting chats by recent activity</li>
+                            <li><code>createdAt</code> - For chronological ordering</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="index-card">
+                        <h5><i class="fas fa-envelope"></i> Message Table</h5>
+                        <ul>
+                            <li><code>chatId</code> - For fetching messages in a chat</li>
+                            <li><code>senderId</code> - For user message history</li>
+                            <li><code>createdAt</code> - For chronological ordering</li>
+                            <li><code>isDeleted</code> - For soft delete queries</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="index-card">
+                        <h5><i class="fas fa-history"></i> Status Table</h5>
+                        <ul>
+                            <li><code>userId</code> - For user status history</li>
+                            <li><code>expiresAt</code> - For automatic cleanup of expired statuses</li>
+                            <li><code>createdAt</code> - For chronological ordering</li>
+                            <li><code>isActive</code> - For filtering active statuses</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-code"></i> Data Types and Constraints</h3>
+                
+                <div class="entity-card">
+                    <h4><i class="fas fa-key"></i> String IDs</h4>
+                    <ul>
+                        <li>All primary keys use <code>cuid()</code> for globally unique identifiers</li>
+                        <li>Foreign keys reference these <code>cuid()</code> values</li>
+                        <li>Provides better distribution than sequential IDs</li>
+                    </ul>
+                </div>
+                
+                <div class="entity-card">
+                    <h4><i class="fas fa-list-alt"></i> Enums for Type Safety</h4>
+                    <ul>
+                        <li><strong>ChatType</strong>: PRIVATE, GROUP, CHANNEL</li>
+                        <li><strong>MessageType</strong>: TEXT, IMAGE, VIDEO, AUDIO, DOCUMENT, LOCATION, CONTACT</li>
+                        <li><strong>CallType</strong>: VOICE, VIDEO</li>
+                        <li><strong>CallStatus</strong>: INITIATED, RINGING, IN_PROGRESS, COMPLETED, MISSED, REJECTED</li>
+                        <li><strong>ReactionType</strong>: LIKE, LOVE, HAHA, WOW, SAD, ANGRY</li>
+                    </ul>
+                </div>
+                
+                <div class="entity-card">
+                    <h4><i class="fas fa-file-code"></i> JSON Fields for Flexibility</h4>
+                    <ul>
+                        <li><code>privacySettings</code> in User table for customizable privacy</li>
+                        <li><code>editHistory</code> in Message table for tracking edits</li>
+                        <li><code>metadata</code> in Media table for file information</li>
+                        <li><code>settings</code> in Chat table for chat-specific configurations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-road"></i> Migration Strategy</h3>
+                
+                <div class="phase-timeline">
+                    <div class="phase-item">
+                        <div class="phase-header">
+                            <i class="fas fa-flag-checkered"></i>
+                            <h4>Phase 1: Core Messaging</h4>
+                        </div>
+                        <ol>
+                            <li>User authentication and profiles</li>
+                            <li>Private chat functionality</li>
+                            <li>Basic message sending/receiving</li>
+                            <li>Contact management</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="phase-item">
+                        <div class="phase-header">
+                            <i class="fas fa-users"></i>
+                            <h4>Phase 2: Group Features</h4>
+                        </div>
+                        <ol>
+                            <li>Group chats with admin roles</li>
+                            <li>Media sharing (images, videos, documents)</li>
+                            <li>Read receipts and typing indicators</li>
+                            <li>Message reactions</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="phase-item">
+                        <div class="phase-header">
+                            <i class="fas fa-rocket"></i>
+                            <h4>Phase 3: Advanced Features</h4>
+                        </div>
+                        <ol>
+                            <li>Status/Stories (24-hour disappearing)</li>
+                            <li>Voice/video calls with WebRTC</li>
+                            <li>Channels and broadcast messages</li>
+                            <li>Bots and automation</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="phase-item">
+                        <div class="phase-header">
+                            <i class="fas fa-puzzle-piece"></i>
+                            <h4>Phase 4: Platform Integration</h4>
+                        </div>
+                        <ol>
+                            <li>End-to-end encryption (Signal Protocol)</li>
+                            <li>Marketplace features</li>
+                            <li>Games and mini-apps</li>
+                            <li>Advanced theming and customization</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-expand-arrows-alt"></i> Scalability Considerations</h3>
+                
+                <div class="entity-card">
+                    <h4><i class

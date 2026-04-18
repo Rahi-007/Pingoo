@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pingoo - Messaging App System Design</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-comments"></i>
+                <h1>Pingoo</h1>
+            </div>
+            <p class="subtitle">Hybrid Messaging App System Design</p>
+            <p class="tech-stack">Next.js + NestJS + PostgreSQL + MikroORM</p>
+            <p class="name-note"><i class="fas fa-info-circle"></i> "Pingoo" = Ping + Friendly Brand</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <a href="#overview" class="nav-link active"><i class="fas fa-home"></i> Overview</a>
+            <a href="#features" class="nav-link"><i class="fas fa-star"></i> Features</a>
+            <a href="#architecture" class="nav-link"><i class="fas fa-sitemap"></i> Architecture</a>
+            <a href="#database" class="nav-link"><i class="fas fa-database"></i> Database</a>
+            <a href="#api" class="nav-link"><i class="fas fa-code"></i> API Design</a>
+            <a href="#tech" class="nav-link"><i class="fas fa-cogs"></i> Tech Stack</a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="section">
+                <h2><i class="fas fa-info-circle"></i> Project Overview</h2>
+                <div class="card">
+                    <p><strong>Pingoo</strong> is a comprehensive messaging application that combines the best features from WhatsApp, Telegram, and Facebook Messenger. This portfolio project showcases modern full-stack development with real-time capabilities, security features, and scalable architecture.</p>
+                    
+                    <div class="name-explanation">
+                        <h4><i class="fas fa-lightbulb"></i> Why "Pingoo"?</h4>
+                        <p>The name combines <strong>"Ping"</strong> (message notification sound) with a friendly, modern suffix <strong>"-oo"</strong> for a unique brand identity that's easy to remember and sounds approachable.</p>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <h3><i class="fas fa-bullseye"></i> Project Goals</h3>
+                        <ul>
+                            <li>Create a hybrid messaging app combining features from three major platforms</li>
+                            <li>Demonstrate modern full-stack development skills</li>
+                            <li>Implement real-time communication with WebSockets</li>
+                            <li>Ensure security with end-to-end encryption</li>
+                            <li>Design for scalability and performance</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features" class="section">
+                <h2><i class="fas fa-star"></i> Platform Features</h2>
+                
+                <div class="features-grid">
+                    <!-- WhatsApp Features -->
+                    <div class="feature-card whatsapp">
+                        <div class="feature-header">
+                            <i class="fab fa-whatsapp"></i>
+                            <h3>WhatsApp Features</h3>
+                        </div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> End-to-end encryption for private chats</li>
+                            <li><i class="fas fa-check-circle"></i> Status updates (24-hour disappearing stories)</li>
+                            <li><i class="fas fa-check-circle"></i> Group chats with admin controls</li>
+                            <li><i class="fas fa-check-circle"></i> Media sharing (images, videos, documents)</li>
+                            <li><i class="fas fa-check-circle"></i> Voice messages with waveform</li>
+                            <li><i class="fas fa-check-circle"></i> Read receipts and typing indicators</li>
+                            <li><i class="fas fa-check-circle"></i> Contact synchronization</li>
+                        </ul>
+                    </div>
+
+                    <!-- Telegram Features -->
+                    <div class="feature-card telegram">
+                        <div class="feature-header">
+                            <i class="fab fa-telegram"></i>
+                            <h3>Telegram Features</h3>
+                        </div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Channels and broadcast messages</li>
+                            <li><i class="fas fa-check-circle"></i> Bots and automation platform</li>
+                            <li><i class="fas fa-check-circle"></i> Secret chats with self-destruct timer</li>
+                            <li><i class="fas fa-check-circle"></i> Large file sharing (up to 2GB)</li>
+                            <li><i class="fas fa-check-circle"></i> Username-based contacts (no phone required)</li>
+                            <li><i class="fas fa-check-circle"></i> Edit/delete messages for everyone</li>
+                            <li><i class="fas fa-check-circle"></i> Message pinning</li>
+                        </ul>
+                    </div>
+
+                    <!-- Messenger Features -->
+                    <div class="feature-card messenger">
+                        <div class="feature-header">
+                            <i class="fab fa-facebook-messenger"></i>
+                            <h3>Messenger Features</h3>
+                        </div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Reactions to messages (like, love, laugh, etc.)</li>
+                            <li><i class="fas fa-check-circle"></i> Stories with filters and effects</li>
+                            <li><i class="fas fa-check-circle"></i> Video/voice calls with WebRTC</li>
+                            <li><i class="fas fa-check-circle"></i> Chat colors and themes</li>
+                            <li><i class="fas fa-check-circle"></i> Polls in chats</li>
+                            <li><i class="fas fa-check-circle"></i> Games and mini-apps integration</li>
+                            <li><i class="fas fa-check-circle"></i> Marketplace integration (future)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section id="architecture" class="section">
+                <h2><i class="fas fa-sitemap"></i> System Architecture</h2>
+                
+                <div class="card">
+                    <h3>Tech Stack Specification</h3>
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i class="fab fa-js-square"></i>
+                            <span>Next.js 14+ (Frontend)</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-node-js"></i>
+                            <span>NestJS (Backend)</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-database"></i>
+                            <span>PostgreSQL 14+</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-layer-group"></i>
+                            <span>MikroORM (ORM)</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-bolt"></i>
+                            <span>Socket.io (Real-time)</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>JWT Authentication</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-cloud"></i>
+                            <span>Cloudinary/S3 (Storage)</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-memory"></i>
+                            <span>Redis (Caching)</span>
+                        </div>
+                    </div>
+
+                    <h3>Architecture Diagram</h3>
+                    <div class="architecture-diagram">
+                        <div class="arch-layer">
+                            <div class="arch-title">Next.js Frontend (App Router)</div>
+                            <div class="arch-components">
+                                <div class="arch-component">Chat Pages</div>
+                                <div class="arch-component">Status Pages</div>
+                                <div class="arch-component">Calls Pages</div>
+                                <div class="arch-component">Groups Pages</div>
+                            </div>
+                        </div>
+                        
+                        <div class="arch-arrow">↓</div>
+                        
+                        <div class="arch-layer">
+                            <div class="arch-title">NestJS Backend API</div>
+                            <div class="arch-components">
+                                <div class="arch-component">Auth Module</div>
+                                <div class="arch-component">Chat Module</div>
+                                <div class="arch-component">Media Module</div>
+                                <div class="arch-component">Real-time Module</div>
+                            </div>
+                        </div>
+                        
+                        <div class="arch-arrow">↓</div>
+                        
+                        <div class="arch-layer">
+                            <div class="arch-title">Data Layer (MikroORM)</div>
+                            <div class="arch-components">
+                                <div class="arch-component">PostgreSQL</div>
+                                <div class="arch-component">Redis Cache</div>
+                                <div class="arch-component">Cloud Storage</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Database Section -->
+            <section id="database" class="section">
+                <h2><i class="fas fa-database"></i> Database Design</h2>
+                
+                <div class="card">
+                    <h3>Core Entities</h3>
+                    <div class="entities-grid">
+                        <div class="entity-card">
+                            <i class="fas fa-user"></i>
+                            <h4>User</h4>
+                            <p>User profiles with multi-method authentication</p>
+                        </div>
+                        <div class="entity-card">
+                            <i class="fas fa-comment"></i>
+                            <h4>Chat</h4>
+                            <p>Private, group, and channel conversations</p>
+                        </div>
+                        <div class="entity-card">
+                            <i class="fas fa-envelope"></i>
+                            <h4>Message</h4>
+                            <p>Messages with various types and features</p>
+                        </div>
+                        <div class="entity-card">
+                            <i class="fas fa-address-book"></i>
+                            <h4>Contact</h4>
+                            <p>User contact relationships</p>
+                        </div>
+                        <div class="entity-card">
+                            <i class="fas fa-history"></i>
+                            <h4>Status</h4>
+                            <p>24-hour disappearing stories</p>
+                        </div>
+                        <div class="entity-card">
+                            <i class="fas fa-phone"></i>
+                            <h4>Call</h4>
+                            <p>Voice/video call records</p>
+                        </div>
+                        <div class="entity-card">
+                            <i class="fas fa-users"></i>
+                            <h4>Group</h4>
+                            <p>Group chat metadata</p>
+                        </div>
+                        <div class="entity-card">
+                            <i class="fas fa-broadcast-tower"></i>
+                            <h4>Channel</h4>
+                            <p>Broadcast channel information</p>
+                        </div>
+                    </div>
+
+                    <h3>Key Relationships</h3>
+                    <ul class="relationship-list">
+                        <li>One User can have many Contacts</li>
+                        <li>One Chat can have many Messages</li>
+                        <li>One Message can have many Reactions</li>
+                        <li>One User can create many Status updates</li>
+                        <li>Groups and Channels are specialized Chat types</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- API Design Section -->
+            <section id="api" class="section">
+                <h2><i class="fas fa-code"></i> API Design</h2>
+                
+                <div class="card">
+                    <h3>RESTful Endpoints</h3>
+                    <div class="api-endpoints">
+                        <div class="api-method get">GET</div>
+                        <div class="api-path">/auth/*</div>
+                        <div class="api-desc">Authentication endpoints</div>
+                        
+                        <div class="api-method post">POST</div>
+                        <div class="api-path">/users/*</div>
+                        <div class="api-desc">User management</div>
+                        
+                        <div class="api-method get">GET</div>
+                        <div class="api-path">/chats/*</div>
+                        <div class="api-desc">Chat operations</div>
+                        
+                        <div class="api-method post">POST</div>
+                        <div class="api-path">/chats/{id}/messages</div>
+                        <div class="api-desc">Message sending</div>
+                        
+                        <div class="api-method put">PUT</div>
+                        <div class="api-path">/groups/*</div>
+                        <div class="api-desc">Group management</div>
+                        
+                        <div class="api-method delete">DELETE</div>
+                        <div class="api-path">/channels/*</div>
+                        <div class="api-desc">Channel operations</div>
+                        
+                        <div class="api-method post">POST</div>
+                        <div class="api-path">/status/*</div>
+                        <div class="api-desc">Stories management</div>
+                        
+                        <div class="api-method post">POST</div>
+                        <div class="api-path">/calls/*</div>
+                        <div class="api-desc">Call initiation and management</div>
+                    </div>
+
+                    <h3>WebSocket Events</h3>
+                    <ul>
+                        <li><strong>message</strong> - Real-time message delivery</li>
+                        <li><strong>typing</strong> - Typing indicators</li>
+                        <li><strong>presence</strong> - Online status updates</li>
+                        <li><strong>call_signal</strong> - Call signaling</li>
+                        <li><strong>notification</strong> - Push notifications</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Tech Stack Section -->
+            <section id="tech" class="section">
+                <h2><i class="fas fa-cogs"></i> Technical Implementation</h2>
+                
+                <div class="card">
+                    <h3>Project Structure</h3>
+                    <pre class="code-block">
+connectify/
+├── frontend/                 # Next.js 14+ Application
+│   ├── src/app/             # App Router
+│   ├── src/components/      # UI Components
+│   └── src/lib/             # Utilities, API clients
+├── backend/                  # NestJS Application
+│   ├── src/modules/         # Feature modules
+│   ├── src/entities/        # MikroORM entities
+│   ├── src/migrations/      # Database migrations
+│   └── src/seeders/         # Data seeders
+├── shared/                  # Shared code
+├── docker/                  # Docker configurations
+└── docs/                   # Documentation
+                    </pre>
+
+                    <h3>MikroORM Setup with Seed Commands</h3>
+                    <div class="code-commands">
+                        <div class="command">
+                            <span class="command-prompt">$</span>
+                            <span class="command-text">npm run migration:create</span>
+                            <span class="command-desc">Create migration from entity changes</span>
+                        </div>
+                        <div class="command">
+                            <span class="command-prompt">$</span>
+                            <span class="command-text">npm run migration:up</span>
+                            <span class="command-desc">Apply migrations</span>
+                        </div>
+                        <div class="command">
+                            <span class="command-prompt">$</span>
+                            <span class="command-text">npm run seed:run</span>
+                            <span class="command-desc">Run all seeders</span>
+                        </div>
+                        <div class="command">
+                            <span class="command-prompt">$</span>
+                            <span class="command-text">npm run db:reset</span>
+                            <span class="command-desc">Reset database with fresh data</span>
+                        </div>
+                    </div>
+
+                    <h3>Security Features</h3>
+                    <div class="security-features">
+                        <div class="security-item">
+                            <i class="fas fa-lock"></i>
+                            <h4>End-to-End Encryption</h4>
+                            <p>Signal Protocol for private chats</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fas fa-user-shield"></i>
+                            <h4>Two-Factor Authentication</h4>
+                            <p>Optional 2FA for account security</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>JWT Tokens</h4>
+                            <p>Secure authentication with refresh tokens</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fas fa-ban"></i>
+                            <h4>Rate Limiting</h4>
+                            <p>Prevent abuse and DDoS attacks</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Pingoo - Hybrid Messaging App System Design</p>
+            <p>Tech Stack: Next.js + NestJS + PostgreSQL + MikroORM</p>
+            <p class="footer-note">Portfolio Project | "Pingoo" = Ping + Friendly Brand</p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Smooth scroll to section
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Update active nav link on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 100)) {
+                    currentSection = '#' + section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+                

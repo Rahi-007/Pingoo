@@ -1,0 +1,368 @@
+// Connectify Database Schema
+// Combines features from WhatsApp, Telegram, and Messenger
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - combines features from all platforms
+model User {
+  id                String        @id @default(cuid())
+  email             String?       @unique
+  phone             String?       @unique
+  username          String?       @unique // Telegram-style username
+  password          String
+  displayName       String
+  bio               String?
+  profilePicture    String?
+  isOnline          Boolean       @default(false)
+  lastSeen          DateTime?
+  isVerified        Boolean       @default(false)
+  twoFactorEnabled  Boolean       @default(false)
+  privacySettings   Json?         // Privacy settings JSON
+  theme             String?       @default("default") // Messenger-style themes
+  
+  // Relations
+  contacts          Contact[]     @relation("UserContacts")
+  blockedUsers      BlockedUser[]
+  chats             ChatMember[]
+  messages          Message[]
+  reactions         Reaction[]
+  statuses          Status[]
+  calls             Call[]
+  groups            Group[]       @relation("GroupAdmins")
+  channels          Channel[]     @relation("ChannelAdmins")
+  
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  
+  @@index([email])
+  @@index([phone])
+  @@index([username])
+  @@index([isOnline])
+}
+
+// Contact model - WhatsApp/Telegram style contacts
+model Contact {
+  id          String   @id @default(cuid())
+  userId      String   // User who owns this contact
+  contactId   String   // The contact user
+  name        String?  // Custom name for contact
+  isFavorite  Boolean  @default(false)
+  
+  user        User     @relation("UserContacts", fields: [userId], references: [id])
+  contactUser User     @relation(fields: [contactId], references: [id])
+  
+  createdAt   DateTime @default(now())
+  
+  @@unique([userId, contactId])
+  @@index([userId])
+  @@index([contactId])
+}
+
+// Blocked users
+model BlockedUser {
+  id          String   @id @default(cuid())
+  blockerId   String
+  blockedId   String
+  
+  blocker     User     @relation("BlockedBy", fields: [blockerId], references: [id])
+  blocked     User     @relation("BlockedUsers", fields: [blockedId], references: [id])
+  
+  createdAt   DateTime @default(now())
+  
+  @@unique([blockerId, blockedId])
+}
+
+// Chat model - supports both private and group chats
+model Chat {
+  id              String        @id @default(cuid())
+  type            ChatType      @default(PRIVATE) // PRIVATE, GROUP, CHANNEL
+  name            String?
+  description     String?
+  avatar          String?
+  isEncrypted     Boolean       @default(false) // WhatsApp-style E2E encryption
+  lastMessageId   String?
+  lastMessageAt   DateTime?
+  
+  // Relations
+  members         ChatMember[]
+  messages        Message[]
+  pinnedMessages  PinnedMessage[]
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@index([type])
+  @@index([lastMessageAt])
+}
+
+// Chat member with roles (like Telegram group roles)
+model ChatMember {
+  id          String   @id @default(cuid())
+  chatId      String
+  userId      String
+  role        ChatRole @default(MEMBER) // OWNER, ADMIN, MEMBER
+  joinedAt    DateTime @default(now())
+  mutedUntil  DateTime?
+  
+  chat        Chat     @relation(fields: [chatId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  
+  @@unique([chatId, userId])
+  @@index([chatId])
+  @@index([userId])
+}
+
+// Message model with features from all platforms
+model Message {
+  id              String        @id @default(cuid())
+  chatId          String
+  senderId        String
+  content         String?
+  messageType     MessageType   @default(TEXT)
+  mediaUrl        String?
+  mediaType       MediaType?
+  fileSize        Int?
+  duration        Int?          // For voice messages/videos
+  thumbnail       String?
+  
+  // Telegram features
+  isEdited        Boolean       @default(false)
+  editHistory     Json?         // Array of edit history
+  isPinned        Boolean       @default(false)
+  
+  // WhatsApp features
+  isForwarded     Boolean       @default(false)
+  forwardedFrom   String?
+  
+  // Messenger features
+  replyToId       String?       // Reply to another message
+  
+  // Status
+  isDeleted       Boolean       @default(false)
+  deletedAt       DateTime?
+  deleteForEveryone Boolean     @default(false)
+  
+  // Encryption
+  encryptionKey   String?       // For E2E encrypted messages
+  
+  // Relations
+  chat            Chat          @relation(fields: [chatId], references: [id])
+  sender          User          @relation(fields: [senderId], references: [id])
+  reactions       Reaction[]
+  readReceipts    ReadReceipt[]
+  replies         Message[]     @relation("MessageReplies")
+  replyTo         Message?      @relation("MessageReplies", fields: [replyToId], references: [id])
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@index([chatId])
+  @@index([senderId])
+  @@index([createdAt])
+  @@index([isDeleted])
+}
+
+// Message reactions (Messenger/Telegram feature)
+model Reaction {
+  id          String     @id @default(cuid())
+  messageId   String
+  userId      String
+  emoji       String     // Unicode emoji or custom reaction
+  createdAt   DateTime   @default(now())
+  
+  message     Message    @relation(fields: [messageId], references: [id])
+  user        User       @relation(fields: [userId], references: [id])
+  
+  @@unique([messageId, userId])
+  @@index([messageId])
+  @@index([userId])
+}
+
+// Read receipts (WhatsApp feature)
+model ReadReceipt {
+  id          String   @id @default(cuid())
+  messageId   String
+  userId      String
+  readAt      DateTime @default(now())
+  
+  message     Message  @relation(fields: [messageId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  
+  @@unique([messageId, userId])
+  @@index([messageId])
+  @@index([userId])
+}
+
+// Status/Stories (WhatsApp/Instagram feature)
+model Status {
+  id          String        @id @default(cuid())
+  userId      String
+  type        StatusType    @default(TEXT) // TEXT, IMAGE, VIDEO
+  content     String?
+  mediaUrl    String?
+  backgroundColor String?   // For text status
+  textColor   String?       // For text status
+  fontStyle   String?       // For text status
+  
+  // WhatsApp: 24-hour expiration
+  expiresAt   DateTime
+  viewsCount  Int           @default(0)
+  
+  // Relations
+  viewer      StatusViewer[]
+  
+  createdAt   DateTime      @default(now())
+  
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([createdAt])
+}
+
+// Status viewers
+model StatusViewer {
+  id          String   @id @default(cuid())
+  statusId    String
+  userId      String
+  viewedAt    DateTime @default(now())
+  
+  status      Status   @relation(fields: [statusId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  
+  @@unique([statusId, userId])
+  @@index([statusId])
+  @@index([userId])
+}
+
+// Group model (Telegram/WhatsApp groups)
+model Group {
+  id              String        @id @default(cuid())
+  chatId          String        @unique
+  creatorId       String
+  description     String?
+  rules           String?
+  isPublic        Boolean       @default(false)
+  inviteLink      String?       @unique
+  maxMembers      Int           @default(1000)
+  
+  chat            Chat          @relation(fields: [chatId], references: [id])
+  creator         User          @relation("GroupAdmins", fields: [creatorId], references: [id])
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+// Channel model (Telegram feature)
+model Channel {
+  id              String        @id @default(cuid())
+  chatId          String        @unique
+  creatorId       String
+  description     String?
+  isPrivate       Boolean       @default(true)
+  subscriberCount Int           @default(0)
+  
+  chat            Chat          @relation(fields: [chatId], references: [id])
+  creator         User          @relation("ChannelAdmins", fields: [creatorId], references: [id])
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+// Call model (Messenger/WhatsApp calls)
+model Call {
+  id              String        @id @default(cuid())
+  callerId        String
+  receiverId      String?
+  chatId          String?
+  callType        CallType      @default(VOICE) // VOICE, VIDEO
+  status          CallStatus    @default(INITIATED)
+  duration        Int?          // in seconds
+  startedAt       DateTime      @default(now())
+  endedAt         DateTime?
+  
+  caller          User          @relation("Caller", fields: [callerId], references: [id])
+  receiver        User?         @relation("Receiver", fields: [receiverId], references: [id])
+  chat            Chat?         @relation(fields: [chatId], references: [id])
+  
+  @@index([callerId])
+  @@index([receiverId])
+  @@index([chatId])
+  @@index([startedAt])
+}
+
+// Pinned messages (Telegram feature)
+model PinnedMessage {
+  id          String   @id @default(cuid())
+  chatId      String
+  messageId   String
+  pinnedBy    String
+  pinnedAt    DateTime @default(now())
+  
+  chat        Chat     @relation(fields: [chatId], references: [id])
+  message     Message  @relation(fields: [messageId], references: [id])
+  user        User     @relation(fields: [pinnedBy], references: [id])
+  
+  @@unique([chatId, messageId])
+  @@index([chatId])
+}
+
+// Enums
+enum ChatType {
+  PRIVATE
+  GROUP
+  CHANNEL
+}
+
+enum ChatRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  VIDEO
+  AUDIO
+  DOCUMENT
+  VOICE
+  STICKER
+  LOCATION
+  CONTACT
+  POLL
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  AUDIO
+  DOCUMENT
+  VOICE
+}
+
+enum StatusType {
+  TEXT
+  IMAGE
+  VIDEO
+}
+
+enum CallType {
+  VOICE
+  VIDEO
+}
+
+enum CallStatus {
+  INITIATED
+  RINGING
+  IN_PROGRESS
+  COMPLETED
+  MISSED
+  REJECTED
+  FAILED
+}

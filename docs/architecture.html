@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pingoo - Messaging App Architecture</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-dove"></i>
+                <h1>Pingoo</h1>
+                <span class="tagline">Messaging App Architecture</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="architecture.html" class="active"><i class="fas fa-sitemap"></i> Architecture</a>
+                <a href="database.html"><i class="fas fa-database"></i> Database</a>
+                <a href="api.html"><i class="fas fa-code"></i> API</a>
+                <a href="features.html"><i class="fas fa-star"></i> Features</a>
+                <a href="tech-stack.html"><i class="fas fa-layer-group"></i> Tech Stack</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h2><i class="fas fa-sitemap"></i> System Architecture</h2>
+                <p class="subtitle">Design overview of Pingoo messaging application combining features from WhatsApp, Telegram, and Facebook Messenger</p>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-info-circle"></i> Overview</h3>
+                <p>Pingoo is a hybrid messaging application combining features from WhatsApp, Telegram, and Facebook Messenger for portfolio demonstration.</p>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-layer-group"></i> Tech Stack</h3>
+                <div class="tech-stack-grid">
+                    <div class="tech-item">
+                        <div class="tech-icon backend"><i class="fas fa-server"></i></div>
+                        <h4>Backend</h4>
+                        <p>NestJS with TypeScript</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon frontend"><i class="fas fa-desktop"></i></div>
+                        <h4>Frontend</h4>
+                        <p>Next.js 14+ with TypeScript</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon database"><i class="fas fa-database"></i></div>
+                        <h4>Database</h4>
+                        <p>PostgreSQL 14+ with MikroORM</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon realtime"><i class="fas fa-bolt"></i></div>
+                        <h4>Real-time</h4>
+                        <p>Socket.io for WebSocket connections</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon auth"><i class="fas fa-shield-alt"></i></div>
+                        <h4>Authentication</h4>
+                        <p>JWT with refresh tokens</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon storage"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <h4>File Storage</h4>
+                        <p>Cloudinary/AWS S3 for media files</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon cache"><i class="fas fa-memory"></i></div>
+                        <h4>Caching</h4>
+                        <p>Redis for session management</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon encryption"><i class="fas fa-lock"></i></div>
+                        <h4>Encryption</h4>
+                        <p>Signal Protocol for E2E encryption</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-mobile-alt"></i> Core Features from Each Platform</h3>
+                
+                <div class="feature-section">
+                    <div class="platform-card whatsapp">
+                        <div class="platform-header">
+                            <i class="fab fa-whatsapp"></i>
+                            <h4>WhatsApp Features</h4>
+                        </div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> End-to-end encryption for private chats</li>
+                            <li><i class="fas fa-check-circle"></i> Status updates (24-hour disappearing)</li>
+                            <li><i class="fas fa-check-circle"></i> Group chats with admin controls</li>
+                            <li><i class="fas fa-check-circle"></i> Media sharing (images, videos, documents)</li>
+                            <li><i class="fas fa-check-circle"></i> Voice messages</li>
+                            <li><i class="fas fa-check-circle"></i> Read receipts and typing indicators</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="platform-card telegram">
+                        <div class="platform-header">
+                            <i class="fab fa-telegram"></i>
+                            <h4>Telegram Features</h4>
+                        </div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Channels and broadcast messages</li>
+                            <li><i class="fas fa-check-circle"></i> Bots and automation</li>
+                            <li><i class="fas fa-check-circle"></i> Secret chats with self-destruct timer</li>
+                            <li><i class="fas fa-check-circle"></i> Large file sharing (up to 2GB)</li>
+                            <li><i class="fas fa-check-circle"></i> Username-based contacts (no phone number required)</li>
+                            <li><i class="fas fa-check-circle"></i> Edit/delete messages</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="platform-card messenger">
+                        <div class="platform-header">
+                            <i class="fab fa-facebook-messenger"></i>
+                            <h4>Messenger Features</h4>
+                        </div>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Reactions to messages (like, love, etc.)</li>
+                            <li><i class="fas fa-check-circle"></i> Stories with filters and effects</li>
+                            <li><i class="fas fa-check-circle"></i> Video/voice calls</li>
+                            <li><i class="fas fa-check-circle"></i> Marketplace integration (optional)</li>
+                            <li><i class="fas fa-check-circle"></i> Games and mini-apps</li>
+                            <li><i class="fas fa-check-circle"></i> Chat colors and themes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-project-diagram"></i> High-Level Architecture Diagram</h3>
+                <div class="architecture-diagram">
+                    <div class="layer">
+                        <div class="layer-header frontend-layer">
+                            <i class="fas fa-desktop"></i>
+                            <h4>Frontend (Next.js)</h4>
+                        </div>
+                        <div class="layer-components">
+                            <div class="component"><i class="fas fa-comments"></i> Chat</div>
+                            <div class="component"><i class="fas fa-history"></i> Status</div>
+                            <div class="component"><i class="fas fa-phone"></i> Calls</div>
+                            <div class="component"><i class="fas fa-users"></i> Groups</div>
+                        </div>
+                    </div>
+                    
+                    <div class="connector">
+                        <div class="arrow"><i class="fas fa-arrow-down"></i></div>
+                        <div class="connector-label">HTTP/REST API & WebSocket</div>
+                    </div>
+                    
+                    <div class="layer">
+                        <div class="layer-header api-layer">
+                            <i class="fas fa-server"></i>
+                            <h4>API Gateway (NestJS)</h4>
+                        </div>
+                        <div class="layer-components">
+                            <div class="component"><i class="fas fa-user-shield"></i> Auth Service</div>
+                            <div class="component"><i class="fas fa-comments"></i> Chat Service</div>
+                            <div class="component"><i class="fas fa-file-upload"></i> Media Service</div>
+                            <div class="component"><i class="fas fa-bolt"></i> Real-time Service</div>
+                        </div>
+                    </div>
+                    
+                    <div class="connector">
+                        <div class="arrow"><i class="fas fa-arrow-down"></i></div>
+                        <div class="connector-label">Database Connections</div>
+                    </div>
+                    
+                    <div class="layer">
+                        <div class="layer-header database-layer">
+                            <i class="fas fa-database"></i>
+                            <h4>Database Layer</h4>
+                        </div>
+                        <div class="layer-components">
+                            <div class="component"><i class="fas fa-database"></i> PostgreSQL (Main)</div>
+                            <div class="component"><i class="fas fa-memory"></i> Redis (Cache)</div>
+                            <div class="component"><i class="fas fa-cloud"></i> S3/Cloudinary</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-cogs"></i> Service Components</h3>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-user-shield"></i></div>
+                        <h4>Authentication Service</h4>
+                        <ul>
+                            <li>User registration/login</li>
+                            <li>JWT token management</li>
+                            <li>Session handling</li>
+                            <li>OTP verification</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-comments"></i></div>
+                        <h4>Chat Service</h4>
+                        <ul>
+                            <li>One-on-one messaging</li>
+                            <li>Group chats</li>
+                            <li>Message persistence</li>
+                            <li>Search functionality</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-file-upload"></i></div>
+                        <h4>Media Service</h4>
+                        <ul>
+                            <li>File upload/download</li>
+                            <li>Image/video processing</li>
+                            <li>Cloud storage integration</li>
+                            <li>Thumbnail generation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-bolt"></i></div>
+                        <h4>Real-time Service</h4>
+                        <ul>
+                            <li>WebSocket connections</li>
+                            <li>Presence tracking</li>
+                            <li>Typing indicators</li>
+                            <li>Read receipts</li>
+                            <li>Push notifications</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-history"></i></div>
+                        <h4>Status Service</h4>
+                        <ul>
+                            <li>24-hour disappearing stories</li>
+                            <li>Status views tracking</li>
+                            <li>Reactions to status</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-phone"></i></div>
+                        <h4>Call Service</h4>
+                        <ul>
+                            <li>Voice/video calls</li>
+                            <li>WebRTC signaling</li>
+                            <li>Call history</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-shield-alt"></i> Security Features</h3>
+                <div class="security-features">
+                    <div class="security-item">
+                        <i class="fas fa-lock"></i>
+                        <span>End-to-end encryption for private chats</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-key"></i>
+                        <span>Two-factor authentication</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Rate limiting</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-filter"></i>
+                        <span>Input validation and sanitization</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-database"></i>
+                        <span>SQL injection prevention</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-code"></i>
+                        <span>XSS protection</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-expand-arrows-alt"></i> Scalability Considerations</h3>
+                <ul class="scalability-list">
+                    <li><i class="fas fa-microchip"></i> Microservices architecture</li>
+                    <li><i class="fas fa-balance-scale"></i> Load balancing</li>
+                    <li><i class="fas fa-project-diagram"></i> Database sharding</li>
+                    <li><i class="fas fa-network-wired"></i> CDN for static assets</li>
+                    <li><i class="fas fa-stream"></i> Message queue for notifications</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3><i class="fas fa-rocket"></i> Deployment</h3>
+                <div class="deployment-grid">
+                    <div class="deploy-item">
+                        <i class="fab fa-docker"></i>
+                        <h4>Docker</h4>
+                        <p>Containerization</p>
+                    </div>
+                    <div class="deploy-item">
+                        <i class="fab fa-kubernetes"></i>
+                        <h4>Kubernetes</h4>
+                        <p>Orchestration</p>
+                    </div>
+                    <div class="deploy-item">
+                        <i class="fas fa-code-branch"></i>
+                        <h4>CI/CD</h4>
+                        <p>Automated pipeline</p>
+                    </div>
+                    <div class="deploy-item">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Monitoring</h4>
+                        <p>Prometheus/Grafana</p>
+                    </div>
+                    <div class="deploy-item">
+                        <i class="fas fa-file-alt"></i>
+                        <h4>Logging</h4>
+                        <p>ELK stack</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Pingoo Messaging App &copy; 2026 | Portfolio Project</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a> | 
+                <a href="architecture.html">Architecture</a> | 
+                <a href="database.html">Database</a> | 
+                <a href="api.html">API</a> | 
+                <a href="features.html">Features</a> | 
+                <a href="tech-stack.html">Tech Stack</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Simple interactivity for architecture diagram
+        document.addEventListener('DOMContentLoaded', function() {
+            const components = document.querySelectorAll('.component');
+            components.forEach(component => {
+                component.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
+                });
+                
+                component.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

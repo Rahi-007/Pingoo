@@ -1,0 +1,72 @@
+{
+  "name": "pingoo-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Pingoo - Hybrid Messaging App",
+  "keywords": [
+    "Rahi",
+    "Bisakto-Rahi",
+    "pingoo",
+    "messaging",
+    "hybrid",
+    "nextjs",
+    "template",
+    "starter",
+    "typescript",
+    "tailwindcss",
+    "shadcn-ui",
+    "react",
+    "react-dom",
+    "react-redux",
+    "redux"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rahi-007/Pingoo.git"
+  },
+  "author": "Bisakto-Rahi",
+  "start-date": "2025-09-20",
+  "last-updated": "2025-09-20",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rahi-007/Pingoo/issues"
+  },
+  "homepage": "https://github.com/Rahi-007/Pingoo#readme",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "format": "prettier --write src",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
+    "@reduxjs/toolkit": "^2.11.2",
+    "axios": "^1.13.6",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "critters": "^0.0.25",
+    "lucide-react": "^1.7.0",
+    "motion": "^12.38.0",
+    "next": "^16.2.1",
+    "next-themes": "^0.4.6",
+    "prettier": "^3.8.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-hot-toast": "^2.6.0",
+    "react-redux": "^9.2.0",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^25",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^10",
+    "eslint-config-next": "16.2.1",
+    "tailwindcss": "^4",
+    "typescript": "^6"
+  }
+}

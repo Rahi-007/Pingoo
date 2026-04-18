@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pingoo Logo Concepts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: #334155;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #3B82F6, #7C3AED, #10B981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        
+        .color-palette {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .color-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .color-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .logo-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .logo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-header {
+            padding: 25px 25px 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .card-subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        
+        .card-content {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .logo-display {
+            margin: 0 auto 25px;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-display svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .logo-variants {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .variant {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            padding: 10px;
+        }
+        
+        .variant svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .card-footer {
+            padding: 20px 25px;
+            background: #f8fafc;
+            border-top: 1px solid #f1f5f9;
+        }
+        
+        .features {
+            list-style: none;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .features li:before {
+            content: "✓";
+            color: #10B981;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .recommended-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #3B82F6, #60A5FA);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .usage-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        
+        .usage-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+        
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .usage-item {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        
+        .usage-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #3B82F6;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .logos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pingoo Logo Concepts</h1>
+            <p class="subtitle">Three distinct logo designs for your real-time messaging platform. Each concept embodies different aspects of communication: chat bubbles, notification signals, and modern typography.</p>
+            
+            <div class="color-palette">
+                <div class="color-item">
+                    <div class="color-box" style="background: #3B82F6;"></div>
+                    <span>Blue (#3B82F6)</span>
+                    <small>Trust + Tech</small>
+                </div>
+                <div class="color-item">
+                    <div class="color-box" style="background: #7C3AED;"></div>
+                    <span>Purple (#7C3AED)</span>
+                    <small>Modern Startup</small>
+                </div>
+                <div class="color-item">
+                    <div class="color-box" style="background: #10B981;"></div>
+                    <span>Green (#10B981)</span>
+                    <small>Messaging Feel</small>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="logos-grid">
+                <!-- Concept 1: Chat Bubble + Ping Dot -->
+                <div class="logo-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Concept 1: Chat Bubble + Ping Dot <span class="recommended-badge">Recommended</span></h2>
+                        <p class="card-subtitle">Minimal + Modern (WhatsApp/Telegram style)</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="logo-display">
+                            <img src="../logos/chat-bubble-logo.svg" alt="Chat Bubble Logo">
+                        </div>
+                        <p>Combines a chat bubble (messaging) with a ping dot (real-time notification). The dot has subtle animation to convey live activity.</p>
+                        
+                        <div class="logo-variants">
+                            <div class="variant">
+                                <img src="../logos/chat-bubble-logo.svg" alt="Square Icon">
+                            </div>
+                            <div class="variant" style="background: #3B82F6;">
+                                <img src="../logos/chat-bubble-logo.svg" alt="Dark Background">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <ul class="features">
+                            <li>Perfect for favicon & mobile app icon</li>
+                            <li>Clean, flat design with subtle gradients</li>
+                            <li>Animated ping effect for real-time feel</li>
+                            <li>Works well at small sizes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Concept 2: P Letter Logo -->
+                <div class="logo-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Concept 2: "P" Letter Logo</h2>
+                        <p class="card-subtitle">Startup style with notification dot</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="logo-display">
+                            <img src="../logos/p-letter-logo.svg" alt="P Letter Logo">
+                        </div>
+                        <p>A stylish "P" for Pingoo with a notification dot inside. Modern geometric design with purple gradient, ideal for mobile app icons.</p>
+                        
+                        <div class="logo-variants">
+                            <div class="variant">
+                                <img src="../logos/p-letter-logo.svg" alt="Square Icon">
+                            </div>
+                            <div class="variant" style="background: #7C3AED;">
+                                <img src="../logos/p-letter-logo.svg" alt="Dark Background">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <ul class="features">
+                            <li>Excellent for app store icons</li>
+                            <li>Modern, geometric design</li>
+                            <li>Notification dot emphasizes real-time</li>
+                            <li>Distinctive and memorable</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Concept 3: Signal Wave Logo -->
+                <div class="logo-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Concept 3: Signal Wave Logo</h2>
+                        <p class="card-subtitle">Real-time communication feel</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="logo-display">
+                            <img src="../logos/signal-wave-logo.svg" alt="Signal Wave Logo">
+                        </div>
+                        <p>2-3 curved lines (like signal bars) radiating from a central dot. Conveys connectivity, waves, and real-time communication.</p>
+                        
+                        <div class="logo-variants">
+                            <div class="variant">
+                                <img src="../logos/signal-wave-logo.svg" alt="Square Icon">
+                            </div>
+                            <div class="variant" style="background: #10B981;">
+                                <img src="../logos/signal-wave-logo.svg" alt="Dark Background">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <ul class="features">
+                            <li>Strong communication symbolism</li>
+                            <li>Animated waves create dynamic feel</li>
+                            <li>Green color evokes WhatsApp familiarity</li>
+                            <li>Works well with "Pingoo" text below</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="usage-section">
+                <h2>Implementation & Usage</h2>
+                <p>All logos are provided as SVG files with embedded animations. They are scalable, lightweight, and perfect for web and mobile applications.</p>
+                
+                <div class="usage-grid">
+                    <div class="usage-item">
+                        <h3>Favicon & App Icons</h3>
+                        <p>Use the square icon versions (without text) for favicons (16x16, 32x32) and mobile app icons (1024x1024).</p>
+                    </div>
+                    <div class="usage-item">
+                        <h3>Full Logo</h3>
+                        <p>Use the icon + "Pingoo" text combination for website headers, marketing materials, and documentation.</p>
+                    </div>
+                    <div class="usage-item">
+                        <h3>Color Variations</h3>
+                        <p>Each logo works on light and dark backgrounds. Use the inverted versions for contrast.</p>
+                    </div>
+                    <div class="usage-item">
+                        <h3>Font Recommendation</h3>
+                        <p>Use <strong>Inter</strong> font (semi-bold) for the "Pingoo" text to maintain consistency with the modern tech aesthetic.</p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">Pro Tips</h3>
+                <ul class="features">
+                    <li>Create both square icon version and full logo (icon + text) for different use cases</li>
+                    <li>Use SVG format for all web applications to ensure crisp rendering at any size</li>
+                    <li>For mobile apps, export PNG versions at 1x, 2x, and 3x resolutions</li>
+                    <li>Consider creating a monochrome version for printing and grayscale contexts</li>
+                </ul>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Logo concepts created for Pingoo - Real-time Messaging Platform</p>
+            <p>All SVG files are located in the <code>/logos</code> directory. Preview page: <code>docs/logo-preview.html</code></p>
+        </footer>
+    </div>
+</body>
+</html>
