@@ -1,331 +1,331 @@
 # Pingoo - Hybrid Messaging App
 
-## Overview
-Pingoo is a comprehensive messaging application that combines the best features from WhatsApp, Telegram, and Facebook Messenger. This project is designed as a portfolio piece showcasing modern full-stack development with real-time capabilities, security features, and scalable architecture.
+Pingoo is a modern, full-stack hybrid messaging application built with Next.js (frontend) and NestJS (backend). This project is designed to be scalable, maintainable, and follows best practices for modern web development.
 
-**Note**: "Pingoo" combines "Ping" (message notification) with a friendly, modern suffix for a unique brand identity.
+## 🚀 Tech Stack
 
-## Features by Platform
+### Frontend
+- **Next.js 16** with TypeScript and Turbopack
+- **Tailwind CSS** for styling
+- **shadcn/ui** for UI components
+- **Redux Toolkit** for state management
+- **Motion** for animations
+- **Axios** for HTTP requests
 
-### WhatsApp Features
-- ✅ End-to-end encryption for private chats
-- ✅ Status updates (24-hour disappearing stories)
-- ✅ Group chats with admin controls
-- ✅ Media sharing (images, videos, documents)
-- ✅ Voice messages with waveform
-- ✅ Read receipts and typing indicators
-- ✅ Contact synchronization
+### Backend
+- **NestJS** with TypeScript
+- **PostgreSQL** with **MikroORM**
+- **JWT Authentication** with refresh tokens
+- **Swagger** for API documentation
+- **Class-validator** for validation
+- **Cloudinary** for media storage
 
-### Telegram Features
-- ✅ Channels and broadcast messages
-- ✅ Bots and automation platform
-- ✅ Secret chats with self-destruct timer
-- ✅ Large file sharing (up to 2GB)
-- ✅ Username-based contacts (no phone required)
-- ✅ Edit/delete messages for everyone
-- ✅ Message pinning
+### Development Tools
+- **Prettier** for code formatting
+- **ESLint** for linting
+- **Concurrently** for running multiple services
 
-### Messenger Features
-- ✅ Reactions to messages (like, love, laugh, etc.)
-- ✅ Stories with filters and effects
-- ✅ Video/voice calls with WebRTC
-- ✅ Chat colors and themes
-- ✅ Polls in chats
-- ✅ Games and mini-apps integration
+## 📋 Prerequisites
 
-## System Architecture
+Before you begin, ensure you have the following installed:
 
-### Tech Stack Specification
-- **Frontend**: Next.js 14+ with TypeScript, Tailwind CSS, App Router
-- **Backend**: NestJS with TypeScript, MikroORM, Socket.io
-- **Database**: PostgreSQL 14+ with JSONB support
-- **ORM**: MikroORM (instead of Prisma) with migrations and seeding
-- **Real-time**: Socket.io for WebSocket connections
-- **Authentication**: JWT with refresh tokens, Two-factor authentication
-- **File Storage**: Cloudinary/AWS S3 for media files
-- **Caching**: Redis for session management
-- **Containerization**: Docker with Docker Compose
+- **Node.js** (v18 or higher)
+- **npm** or **yarn**
+- **PostgreSQL** (or use Neon cloud database)
+- **Git**
 
-### High-Level Architecture (Next.js + NestJS)
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Next.js Frontend (App Router)            │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐    │
-│  │   Chat   │  │  Status  │  │  Calls   │  │  Groups  │    │
-│  │  Pages   │  │  Pages   │  │  Pages   │  │  Pages   │    │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘    │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    NestJS Backend API                        │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐    │
-│  │   Auth   │  │   Chat   │  │  Media   │  │  Real-   │    │
-│  │  Module  │  │  Module  │  │  Module  │  │  time    │    │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘    │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                     Data Layer (MikroORM)                    │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
-│  │PostgreSQL│  │  Redis   │  │  S3/     │                   │
-│  │  (Main)  │  │ (Cache)  │  │Cloudinary│                   │
-│  └──────────┘  └──────────┘  └──────────┘                   │
-└─────────────────────────────────────────────────────────────┘
+## 🛠️ Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Rahi-007/Pingoo.git
+cd Pingoo
 ```
 
-## Database Design
+### 2. Install Dependencies
 
-### Core Entities
-1. **User** - User profiles with multi-method authentication
-2. **Chat** - Private, group, and channel conversations
-3. **Message** - Messages with various types and features
-4. **Contact** - User contact relationships
-5. **Status** - 24-hour disappearing stories
-6. **Call** - Voice/video call records
-7. **Group** - Group chat metadata
-8. **Channel** - Broadcast channel information
+Run the following command to install all dependencies (root, frontend, and backend):
 
-### Key Relationships
-- One User can have many Contacts
-- One Chat can have many Messages
-- One Message can have many Reactions
-- One User can create many Status updates
-- Groups and Channels are specialized Chat types
-
-## API Design
-
-### RESTful Endpoints
-- **Authentication**: `/auth/*` - Registration, login, token refresh
-- **Users**: `/users/*` - Profile management, search, blocking
-- **Chats**: `/chats/*` - Chat creation, listing, management
-- **Messages**: `/chats/{id}/messages` - Message operations
-- **Groups**: `/groups/*` - Group management
-- **Channels**: `/channels/*` - Channel operations
-- **Status**: `/status/*` - Stories management
-- **Calls**: `/calls/*` - Call initiation and management
-- **Media**: `/media/*` - File upload/download
-
-### WebSocket Events
-- Real-time message delivery
-- Typing indicators
-- Online status updates
-- Call signaling
-- Notification pushes
-
-## Security Features
-
-### Authentication & Authorization
-- JWT-based authentication with refresh tokens
-- Two-factor authentication support
-- Role-based access control (RBAC)
-- Session management with Redis
-
-### Data Protection
-- End-to-end encryption for private chats (Signal Protocol)
-- Password hashing with bcrypt
-- HTTPS enforcement
-- Input validation and sanitization
-
-### Privacy Controls
-- Granular privacy settings (last seen, profile photo, status)
-- Block/unblock users
-- Report abuse system
-- Data export functionality
-
-## Scalability Considerations
-
-### Horizontal Scaling
-- Stateless microservices architecture
-- Database sharding by user region
-- Load balancing with NGINX
-- CDN for static assets and media
-
-### Performance Optimization
-- Redis caching for frequently accessed data
-- Database query optimization with indexes
-- Connection pooling
-- Message queue for background jobs
-
-### Monitoring & Observability
-- Application performance monitoring (APM)
-- Centralized logging with ELK stack
-- Real-time metrics with Prometheus/Grafana
-- Error tracking with Sentry
-
-## Deployment Strategy
-
-### Development
-- Docker Compose for local development
-- Hot reload for both frontend and backend
-- Automated testing on Git push
-
-### Staging
-- Kubernetes cluster for staging environment
-- Automated deployment from main branch
-- Load testing and performance validation
-
-### Production
-- Blue-green deployment strategy
-- Canary releases for new features
-- Automated rollback on failure
-- Zero-downtime updates
-
-## Project Structure (Next.js + NestJS + MikroORM)
-
-```
-connectify/
-├── frontend/                 # Next.js 14+ Application
-│   ├── src/
-│   │   ├── app/             # App Router (pages, layouts, loading)
-│   │   │   ├── (auth)/      # Authentication routes
-│   │   │   ├── chat/        # Chat pages
-│   │   │   ├── status/      # Status/stories pages
-│   │   │   └── calls/       # Call pages
-│   │   ├── components/      # Reusable UI components
-│   │   │   ├── ui/          # Shadcn/ui components
-│   │   │   ├── chat/        # Chat-specific components
-│   │   │   └── common/      # Common components
-│   │   ├── lib/             # Utilities, API clients
-│   │   │   ├── api/         # API service calls
-│   │   │   ├── socket/      # WebSocket client
-│   │   │   └── utils/       # Utility functions
-│   │   ├── store/           # State management (Zustand)
-│   │   ├── hooks/           # Custom React hooks
-│   │   └── styles/          # Tailwind CSS, global styles
-│   ├── public/              # Static assets
-│   └── next.config.js       # Next.js configuration
-├── backend/                  # NestJS Application
-│   ├── src/
-│   │   ├── modules/         # Feature modules (NestJS structure)
-│   │   │   ├── auth/        # Authentication module
-│   │   │   │   ├── auth.controller.ts
-│   │   │   │   ├── auth.service.ts
-│   │   │   │   ├── auth.module.ts
-│   │   │   │   └── entities/
-│   │   │   ├── users/       # Users module
-│   │   │   ├── chats/       # Chats module
-│   │   │   ├── messages/    # Messages module
-│   │   │   ├── media/       # Media module
-│   │   │   └── calls/       # Calls module
-│   │   ├── entities/        # MikroORM entity definitions
-│   │   │   ├── user.entity.ts
-│   │   │   ├── chat.entity.ts
-│   │   │   ├── message.entity.ts
-│   │   │   └── ...
-│   │   ├── migrations/      # Database migrations
-│   │   ├── seeders/         # Data seeders (MikroORM seeder)
-│   │   ├── common/          # Shared utilities, guards, filters
-│   │   └── main.ts          # Application entry point
-│   ├── test/                # E2E and unit tests
-│   ├── mikro-orm.config.ts  # MikroORM configuration
-│   └── package.json         # Backend dependencies
-├── shared/                  # Shared code between frontend/backend
-│   ├── types/              # TypeScript type definitions
-│   ├── constants/          # Shared constants
-│   └── utils/              # Shared utilities
-├── docker/                  # Docker configurations
-│   ├── docker-compose.yml  # PostgreSQL, Redis, Backend, Frontend
-│   ├── backend.Dockerfile
-│   └── frontend.Dockerfile
-└── docs/                   # Documentation
-    ├── architecture.md
-    ├── api-endpoints.md
-    ├── database-diagram.md
-    ├── core-features.md
-    └── tech-stack-guide.md  # Your specific stack guide
+```bash
+npm run install:all
 ```
 
-## Getting Started
+Alternatively, you can install them separately:
 
-### Prerequisites
-- Node.js 18+ and npm
-- PostgreSQL 14+
-- Redis 6+
-- Docker and Docker Compose
+```bash
+# Install root dependencies
+npm install
 
-### Development Setup
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   cd backend && npm install
-   cd ../frontend && npm install
-   ```
-3. Set up environment variables:
-   ```bash
-   cp .env.example .env
-   ```
-4. Start development services:
-   ```bash
-   docker-compose up -d
-   npm run dev:backend
-   npm run dev:frontend
-   ```
+# Install frontend dependencies
+npm install --prefix apps/frontend
 
-### Database Setup
-1. Create database:
-   ```bash
-   npx mikro-orm migration:up
-   ```
-2. Seed initial data:
-   ```bash
-   npm run db:seed
-   ```
+# Install backend dependencies  
+npm install --prefix apps/backend
+```
+
+### 3. Environment Configuration
+
+Copy the `.env.example` file to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Edit the `.env` file with your configuration:
+
+```env
+# Frontend Environment Variables
+NODE_ENV=development
+NEXT_PUBLIC_BACKEND_API_URL=http://localhost:8080
+
+# Server (Backend)
+PORT=8080
+CORS_ORIGIN=http://localhost:3000
+
+# Database Configuration (choose one option)
+
+# Option 1: Neon PostgreSQL (cloud)
+DATABASE_URL=postgresql://username:password@host/database?sslmode=require
+
+# Option 2: Local PostgreSQL
+DB_NAME=pingoo
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=your_password
+
+# JWT Configuration
+JWT_SECRET=your_jwt_secret_key_here
+JWT_EXPIRES_IN=1d
+JWT_REFRESH_SECRET=your_refresh_secret_key_here
+JWT_REFRESH_EXPIRES_IN=7d
+```
+
+### 4. Database Setup
+
+#### Option A: Using Local PostgreSQL
+1. Install PostgreSQL on your machine
+2. Create a database named `pingoo` (or whatever you configured in `.env`)
+3. Run database migrations and seed data:
+
+```bash
+npm run sync:db
+```
+
+#### Option B: Using Neon (Cloud PostgreSQL)
+1. Create a free account at [Neon.tech](https://neon.tech)
+2. Create a new project and get your connection string
+3. Update the `DATABASE_URL` in your `.env` file
+4. Run the seed command:
+
+```bash
+npm run sync:db
+```
+
+### 5. Start the Development Servers
+
+Run both frontend and backend simultaneously:
+
+```bash
+npm run dev
+```
+
+This will start:
+- **Frontend** at `http://localhost:3000`
+- **Backend** at `http://localhost:8080`
+
+You can also run them separately:
+
+```bash
+# Frontend only
+npm run dev --prefix apps/frontend
+
+# Backend only
+npm run start:dev --prefix apps/backend
+```
+
+## 📁 Project Structure
+
+```
+pingoo/
+├── apps/
+│   ├── frontend/          # Next.js frontend application
+│   │   ├── src/
+│   │   │   ├── app/       # Next.js app router pages
+│   │   │   ├── components/# React components
+│   │   │   ├── context/   # Redux store and slices
+│   │   │   ├── hooks/     # Custom React hooks
+│   │   │   ├── interface/ # TypeScript interfaces
+│   │   │   ├── lib/       # Utility functions
+│   │   │   ├── provider/  # Context providers
+│   │   │   ├── service/   # API service functions
+│   │   │   └── style/     # Global CSS styles
+│   │   └── public/        # Static assets
+│   └── backend/           # NestJS backend application
+│       ├── src/
+│       │   ├── auth/      # Authentication module
+│       │   ├── user/      # User management
+│       │   ├── config/    # Configuration files
+│       │   ├── common/    # Shared utilities
+│       │   └── health/    # Health checks
+│       └── test/          # Test files
+├── database/              # Database schemas and migrations
+├── docs/                  # Documentation
+└── .env.example           # Environment variables template
+```
+
+## 🚀 Available Scripts
+
+### Root Package Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run install:all` | Install all dependencies (root, frontend, backend) |
+| `npm run dev` | Start both frontend and backend in development mode |
+| `npm run build` | Build both frontend and backend for production |
+| `npm run format` | Format code in both frontend and backend |
+| `npm run clean` | Remove all node_modules directories |
+| `npm run sync:db` | Sync database schema and seed data |
+| `npm run refresh:db` | Refresh database with fresh seed data |
+
+### Frontend Scripts (in `apps/frontend/`)
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start Next.js development server |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
+| `npm run format` | Format code with Prettier |
+
+### Backend Scripts (in `apps/backend/`)
+
+| Command | Description |
+|---------|-------------|
+| `npm run start:dev` | Start NestJS in development mode with watch |
+| `npm run build` | Build TypeScript files |
+| `npm run start` | Start production server |
+| `npm run format` | Format code with Prettier |
+| `npm run seed` | Refresh and seed database |
+| `npm run seed:sync` | Sync database schema and seed |
+
+## 📚 API Documentation
+
+Once the backend is running, you can access the Swagger API documentation at:
+
+```
+http://localhost:8080/api
+```
+
+The API endpoints include:
+- **Authentication**: Login, register, refresh tokens
+- **Users**: Get user profile, update user information
+- **Health**: System health checks
+
+## 🤝 Contributing
+
+We welcome contributions! Please follow these steps to contribute:
+
+### 1. Fork the Repository
+Click the "Fork" button at the top right of the repository page.
+
+### 2. Clone Your Fork
+```bash
+git clone https://github.com/YOUR_USERNAME/Pingoo.git
+cd Pingoo
+```
+
+### 3. Create a Feature Branch
+```bash
+git checkout -b feature/your-feature-name
+```
+
+### 4. Make Your Changes
+- Write clean, well-documented code
+- Follow the existing code style
+- Add tests if applicable
+- Update documentation as needed
+
+### 5. Commit Your Changes
+```bash
+git add .
+git commit -m "Add: your feature description"
+```
+
+### 6. Push to Your Fork
+```bash
+git push origin feature/your-feature-name
+```
+
+### 7. Create a Pull Request
+1. Go to the original repository
+2. Click "New Pull Request"
+3. Select your fork and feature branch
+4. Add a clear description of your changes
+5. Submit the pull request
+
+## 📝 Pull Request Guidelines
+
+When creating a pull request, please ensure:
+
+1. **Descriptive Title**: Clearly describe what the PR does
+2. **Detailed Description**: Explain the changes and why they're needed
+3. **Related Issues**: Reference any related issues (e.g., "Fixes #123")
+4. **Screenshots**: Include screenshots for UI changes
+5. **Testing**: Confirm that your changes don't break existing functionality
+
+### PR Template:
+```
+## Description
+[Describe what this PR does]
+
+## Changes Made
+- [ ] Change 1
+- [ ] Change 2
+- [ ] Change 3
 
 ## Testing
+- [ ] Tested locally
+- [ ] All tests pass
+- [ ] No breaking changes
 
-### Test Types
-- **Unit Tests**: Jest for business logic
-- **Integration Tests**: API endpoint testing
-- **E2E Tests**: Cypress for user workflows
-- **Performance Tests**: Load testing with k6
+## Screenshots (if applicable)
+[Add screenshots here]
 
-### Running Tests
-```bash
-# Backend tests
-npm test:backend
-
-# Frontend tests
-npm test:frontend
-
-# E2E tests
-npm test:e2e
+## Related Issues
+Fixes #issue_number
 ```
 
-## Contributing
+## 🐛 Reporting Issues
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit changes with descriptive messages
-4. Push to the branch
-5. Create a Pull Request
+If you find a bug or have a feature request, please create an issue on GitHub:
 
-## License
-This project is for portfolio demonstration purposes.
+1. Go to the [Issues page](https://github.com/Rahi-007/Pingoo/issues)
+2. Click "New Issue"
+3. Choose the appropriate template
+4. Provide as much detail as possible:
+   - Steps to reproduce
+   - Expected vs actual behavior
+   - Screenshots if applicable
+   - Environment details (OS, browser, Node version)
 
-## Future Enhancements
+## 📄 License
 
-### Short-term (Next 3 months)
-- [ ] Payment integration for premium features
-- [ ] Marketplace for bots and stickers
-- [ ] Advanced search with filters
-- [ ] Custom emoji and sticker creation
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### Medium-term (Next 6 months)
-- [ ] AI-powered chat suggestions
-- [ ] Video conferencing with screen sharing
-- [ ] Collaborative document editing
-- [ ] Calendar integration
+## 🙏 Acknowledgments
 
-### Long-term (Next 12 months)
-- [ ] Blockchain-based message verification
-- [ ] AR filters for video calls
-- [ ] Cross-platform desktop apps
-- [ ] Enterprise version with admin controls
+- [Next.js](https://nextjs.org/) - The React framework
+- [NestJS](https://nestjs.com/) - A progressive Node.js framework
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [shadcn/ui](https://ui.shadcn.com/) - Re-usable components
+- [MikroORM](https://mikro-orm.io/) - TypeScript ORM
 
-## Contact
-For questions or feedback about this portfolio project, please refer to the documentation or create an issue in the repository.
+## 📞 Contact
 
----
-**Note**: This is a portfolio project demonstrating system design and architecture skills. Not all features may be fully implemented in the initial version.
+- **Author**: Bisakto-Rahi
+- **GitHub**: [@Rahi-007](https://github.com/Rahi-007)
+- **Repository**: [https://github.com/Rahi-007/Pingoo](https://github.com/Rahi-007/Pingoo)
+
+**Thank you! 🚀**
