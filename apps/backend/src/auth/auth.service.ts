@@ -13,31 +13,31 @@ interface ICreateUserDto extends CreateUserDto {
 export class AuthService {
   constructor(private readonly em: EntityManager) {}
 
-  // User Login
+  // Y---------{ User Login }------------------
   async validateUser(loginDto: LoginDto): Promise<IUser> {
-    // Find user by email
-    const user = await this.em.findOne(UserSchema, { email: loginDto.email });
+    //W ==> Find user by userName
+    const user = await this.em.findOne(UserSchema, { userName: loginDto.userName });
 
     if (!user) {
-      throw new UnauthorizedException("Invalid credentials");
+      throw new UnauthorizedException("Invalid User Name");
     }
 
-    // Compare password with hash
+    // W ==> Compare password with hash
     const isPasswordValid = await bcrypt.compare(loginDto.password, user.passHash);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException("Invalid credentials");
+      throw new UnauthorizedException("Invalid password");
     }
 
-    user.lastLoggedIn = new Date();
+    user.lastLoginAt = new Date();
     await this.em.flush();
 
     return user;
   }
 
-  // Create a new user
+  // Y---------{ Create a new user }------------------
   async create(createUserDto: ICreateUserDto): Promise<IUser> {
-    // Check if email already exists
+    // W ==> Check if email already exists
     const existingEmail = await this.em.findOne(UserSchema, {
       email: createUserDto.email,
     });
@@ -45,7 +45,7 @@ export class AuthService {
       throw new ConflictException("Email already exists");
     }
 
-    // Check if phone already exists (if provided)
+    // W ==> Check if phone already exists (if provided)
     if (createUserDto.phone) {
       const existingPhone = await this.em.findOne(UserSchema, {
         phone: createUserDto.phone,
@@ -55,7 +55,7 @@ export class AuthService {
       }
     }
 
-    // Hash password
+    // W ==> Hash password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(createUserDto.password, saltRounds);
 
@@ -79,8 +79,9 @@ export class AuthService {
     return user;
   }
 
+  // Y---------{ Update last login }------------------
   async updateLastLoggedIn(user: IUser): Promise<IUser> {
-    user.lastLoggedIn = new Date();
+    user.lastLoginAt = new Date();
     await this.em.flush();
     return user;
   }

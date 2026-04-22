@@ -21,7 +21,7 @@ import { ApiBearerAuth, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { Roles } from "../auth/decorators/roles.decorator";
-import { buildUserResponse } from "../utils/user-response.util";
+import { IUser } from "../auth/entity/user.entity";
 
 @Controller("user")
 export class UserController {
@@ -51,7 +51,7 @@ export class UserController {
   async findAll(): Promise<UserRes[]> {
     try {
       const users = await this.userService.findAll();
-      return users.map(user => buildUserResponse(user));
+      return users.map(user => this.buildUserResponse(user));
     } catch (error) {
       console.error("Fetch Users Error:", error);
 
@@ -59,9 +59,9 @@ export class UserController {
     }
   }
 
-  /**
-   * Get user by ID
-   */
+  // Y======================================
+  // Y-----------{ GET USER BY ID }---------
+  // Y======================================
   @ApiOperation({ summary: "Get user by ID (public)" })
   @ApiBearerAuth("JWT-auth")
   @UseGuards(JwtAuthGuard)
@@ -89,7 +89,7 @@ export class UserController {
         throw new ForbiddenException("You can only access your own profile");
       }
       const user = await this.userService.findOne(id);
-      return buildUserResponse(user);
+      return this.buildUserResponse(user);
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -98,9 +98,9 @@ export class UserController {
     }
   }
 
-  /**
-   * Update an existing user
-   */
+  // Y======================================
+  // Y-----{ Update an existing user }------
+  // Y======================================
   @ApiOperation({ summary: "Update user by ID (owner or admin)" })
   @ApiBearerAuth("JWT-auth")
   @UseGuards(JwtAuthGuard)
@@ -133,7 +133,7 @@ export class UserController {
         throw new ForbiddenException("You can only update your own profile");
       }
       const updatedUser = await this.userService.update(id, updateUserDto);
-      return buildUserResponse(updatedUser);
+      return this.buildUserResponse(updatedUser);
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -142,9 +142,9 @@ export class UserController {
     }
   }
 
-  /**
-   * Delete a user
-   */
+  // Y======================================
+  // Y----------{ Delete a user }-----------
+  // Y======================================
   @ApiBearerAuth("JWT-auth")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -171,5 +171,27 @@ export class UserController {
       }
       throw new InternalServerErrorException(`Failed to delete user: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
+  }
+
+  // Y----------{ User Response }-----------
+  private buildUserResponse(user: IUser): UserRes {
+    return {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName ?? "",
+      email: user.email,
+      phone: user.phone ?? "",
+      address: user.address ?? "",
+      role: user.role,
+      dob: user.dob ?? undefined,
+      lastLoggedIn: user.lastLoginAt ?? undefined,
+      gender: user.gender ?? "",
+      bloodGroup: user.bloodGroup ?? "",
+      avatar: user.avatar ?? "",
+      isVerified: user.isVerified ?? false,
+      isBlocked: user.isBlocked ?? false,
+      createdAt: user.createdAt ?? undefined,
+      updatedAt: (user.updatedAt as Date) ?? undefined,
+    };
   }
 }

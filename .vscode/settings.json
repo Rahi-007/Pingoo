@@ -10,5 +10,52 @@
         "mikro",
         "Pingoo",
         "turbopack"
-    ]
+    ],
+    "better-comments.tags": [
+    {
+      "tag": "R",
+      "color": "#FF2D00",
+      "italic": true
+    },
+    {
+      "tag": "B",
+      "color": "#3498DB",
+      "italic": true
+    },
+    {
+      "tag": "//",
+      "color": "#474747",
+      "strikethrough": true,
+      "italic": true
+    },
+    {
+      "tag": "O",
+      "color": "#FF8C00"
+    },
+    {
+      "tag": "G",
+      "color": "#98C379",
+      "italic": true
+    },
+    {
+      "tag": "I",
+      "color": "#6610f2",
+      "italic": true
+    },
+    {
+      "tag": "Y",
+      "color": "#ffc107",
+      "italic": true
+    },
+    {
+      "tag": "W",
+      "color": "#fff3cd",
+      "italic": true
+    },
+    {
+      "tag": "D",
+      "color": "#000000",
+      "italic": true
+    }
+  ]
 }

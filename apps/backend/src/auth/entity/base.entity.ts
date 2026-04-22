@@ -8,6 +8,6 @@ export abstract class BaseSchema {
   @Property({ onCreate: () => new Date() })
   createdAt!: Date;
 
-  @Property({ onCreate: () => new Date(), onUpdate: () => new Date() })
-  updatedAt!: Date;
+  @Property({ onUpdate: () => new Date(), nullable: true })
+  updatedAt?: Date;
 }

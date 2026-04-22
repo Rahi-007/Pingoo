@@ -18,7 +18,6 @@ import { CreateUserDto, UserRes } from "./dto/user.dto";
 import { ApiBearerAuth, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { JwtAuthGuard } from "./guards/jwt-auth.guard";
 import { IUser } from "./entity/user.entity";
-import { buildUserResponse } from "../utils/user-response.util";
 
 @Controller("auth")
 export class AuthController {
@@ -28,7 +27,9 @@ export class AuthController {
     private readonly userService: UserService
   ) {}
 
-  // Login endpoint
+  // Y======================================
+  // Y-----------{ Login endpoint }---------
+  // Y======================================
   @Post("login")
   @ApiOperation({ summary: "User login" })
   @ApiResponse({
@@ -45,13 +46,13 @@ export class AuthController {
 
       const payload = {
         sub: user.id,
-        email: user.email,
+        userName: user.userName,
         role: user.role,
       };
 
       const [accessToken, refreshToken] = await Promise.all([this.jwtService.generateToken(payload), this.jwtService.generateRefreshToken(payload)]);
 
-      const userRes = buildUserResponse(user);
+      const userRes = this.buildUserResponse(user);
 
       return {
         accessToken,
@@ -66,9 +67,9 @@ export class AuthController {
     }
   }
 
-  /**
-   * Register a new user
-   */
+  // Y======================================
+  // Y--------{ Register a new user }-------
+  // Y======================================
   @Post("register")
   @ApiOperation({ summary: "Register user and auto login" })
   @ApiResponse({
@@ -85,7 +86,7 @@ export class AuthController {
 
       const payload = {
         sub: loggedInUser.id,
-        email: loggedInUser.email,
+        userName: loggedInUser.userName,
         role: loggedInUser.role,
       };
 
@@ -94,16 +95,16 @@ export class AuthController {
       return {
         accessToken,
         refreshToken,
-        user: buildUserResponse(loggedInUser),
+        user: this.buildUserResponse(loggedInUser),
       };
     } catch (error) {
       throw new Error(`Failed to register user: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   }
 
-  /**
-   * Get current user profile
-   */
+  // Y======================================
+  // Y-----{ Get current user profile }-----
+  // Y======================================
   @Get("profile")
   @ApiBearerAuth("JWT-auth")
   @UseGuards(JwtAuthGuard)
@@ -124,7 +125,7 @@ export class AuthController {
         throw new UnauthorizedException("Invalid token");
       }
       const user = await this.userService.findOne(userId);
-      return buildUserResponse(user);
+      return this.buildUserResponse(user);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
         throw error;
@@ -133,9 +134,9 @@ export class AuthController {
     }
   }
 
-  /**
-   * Logout user (client-side token invalidation)
-   */
+  // Y======================================
+  // Y-----------{ Logout user }------------
+  // Y======================================
   @Post("logout")
   @ApiBearerAuth("JWT-auth")
   @UseGuards(JwtAuthGuard)
@@ -152,9 +153,9 @@ export class AuthController {
     };
   }
 
-  /**
-   * Refresh access token
-   */
+  // Y======================================
+  // Y------{ Refresh access token }--------
+  // Y======================================
   @Post("refresh")
   @ApiOperation({ summary: "Refresh access token using refresh token" })
   @ApiResponse({
@@ -173,7 +174,7 @@ export class AuthController {
 
       const newPayload = {
         sub: user.id,
-        email: user.email,
+        userName: user.userName,
         role: user.role,
       };
 
@@ -185,10 +186,31 @@ export class AuthController {
       return {
         accessToken,
         refreshToken,
-        user: buildUserResponse(user),
+        user: this.buildUserResponse(user),
       };
     } catch (error) {
       throw new UnauthorizedException("Invalid refresh token");
     }
+  }
+
+  private buildUserResponse(user: IUser): UserRes {
+    return {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName ?? "",
+      email: user.email,
+      phone: user.phone ?? "",
+      address: user.address ?? "",
+      role: user.role,
+      dob: user.dob ?? undefined,
+      lastLoggedIn: user.lastLoginAt ?? undefined,
+      gender: user.gender ?? "",
+      bloodGroup: user.bloodGroup ?? "",
+      avatar: user.avatar ?? "",
+      isVerified: user.isVerified ?? false,
+      isBlocked: user.isBlocked ?? false,
+      createdAt: user.createdAt ?? undefined,
+      updatedAt: (user.updatedAt as Date) ?? undefined,
+    };
   }
 }

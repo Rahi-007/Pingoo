@@ -6,10 +6,10 @@ import { UserRes } from "./user.dto";
 export class LoginDto {
   @IsString()
   @ApiProperty({
-    description: "User email",
-    example: "user@example.com",
+    description: "User Name",
+    example: "user007",
   })
-  email!: string;
+  userName!: string;
 
   @IsString()
   @ApiProperty({

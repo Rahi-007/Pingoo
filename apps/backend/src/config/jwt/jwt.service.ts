@@ -3,7 +3,7 @@ import { JwtService } from "@nestjs/jwt";
 
 export interface JwtPayload {
   sub: number;
-  email: string;
+  userName: string;
   role: string;
 }
 
