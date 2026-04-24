@@ -16,8 +16,8 @@ const roboto = Roboto_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Starter Template",
-  description: "A production-ready Next.js starter template with TypeScript, Tailwind CSS, and shadcn/ui",
+  title: "Pingoo Web",
+  description: "Massaging web Application Open Source!!",
 };
 
 interface IProps {
