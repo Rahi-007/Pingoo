@@ -29,12 +29,12 @@ const HomeCard = () => {
       </Card>
       <div className="hidden lg:flex flex-col justify-between h-[50vh]">
         {miniCard.map((item, index) => (
-          <Card key={index} className="h-[24vh] min-w-35 border-0">
+          <Card key={index} className="h-[24vh] min-w-35 border-0 group cursor-pointer">
             <CardContent className="flex flex-col items-center text-(--color-sidebar-primary) px-6 py-8 gap-2">
-              <Link href={item.link} className="hover:text-gray-600 transition-colors delay-75">
+              <Link href={item.link} className="group-hover:text-gray-600 transition-colors delay-75">
                 {item.icon}
               </Link>
-              <p className="text-sm">{item.title}</p>
+              <p className="text-sm group-hover:text-gray-600 transition-colors delay-75">{item.title}</p>
             </CardContent>
           </Card>
         ))}
