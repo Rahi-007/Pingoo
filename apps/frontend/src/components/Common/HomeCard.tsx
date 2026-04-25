@@ -17,7 +17,7 @@ const HomeCard = () => {
   ];
   return (
     <div className="hidden md:flex gap-4 px-8 lg:px-4 xl:px-0">
-      <Card className="h-[55vh] lg:h-[50vh]">
+      <Card className="h-[55vh] lg:h-[50vh] border-0">
         <CardContent className="flex flex-col items-center text-(--color-sidebar-primary) py-8 px-14">
           <MessageCircleHeart className="w-26 h-26" />
           <h1 className="text-2xl pt-4 pb-1 text-center">Download Pingoo for windows</h1>
@@ -29,7 +29,7 @@ const HomeCard = () => {
       </Card>
       <div className="hidden lg:flex flex-col justify-between h-[50vh]">
         {miniCard.map((item, index) => (
-          <Card key={index} className="h-[24vh] min-w-35">
+          <Card key={index} className="h-[24vh] min-w-35 border-0">
             <CardContent className="flex flex-col items-center text-(--color-sidebar-primary) px-6 py-8 gap-2">
               <Link href={item.link} className="hover:text-gray-600 transition-colors delay-75">
                 {item.icon}
