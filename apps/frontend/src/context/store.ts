@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { counterSlice } from "./slice/counter.slice";
-import { logger } from "./middleware/logger";
+import { authSlice } from "./slice/auth.slice";
+// import { logger } from "./middleware/logger";
 
 export const store = configureStore({
   reducer: {
-    counter: counterSlice.reducer,
+    auth: authSlice.reducer,
   },
   devTools: process.env.NODE_ENV === "development",
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(...(process.env.NODE_ENV === "development" ? [logger] : [])),
+  // middleware: getDefaultMiddleware => getDefaultMiddleware().concat(...(process.env.NODE_ENV === "development" ? [logger] : [])),
 });
 
 //W---------={ RootState and AppDispatch }=----------</br>

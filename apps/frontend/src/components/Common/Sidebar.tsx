@@ -22,3 +22,16 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+// <Link href="/" className="">
+//   <CircleDot className="w-6 h-6" />
+// </Link>
+// <Link href="/" className="">
+//   <Users className="w-6 h-6" />
+// </Link>
+// <Link href="/" className="">
+//   <Radio className="w-6 h-6" />
+// </Link>
+// <Link href="/" className="">
+//   <Archive className="w-6 h-6" />
+// </Link>

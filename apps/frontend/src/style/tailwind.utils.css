@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.hover-effect {
+  @apply transition-colors delay-75;
+}
+
+.group:hover .hover-effect {
+  @apply text-gray-600;
+}

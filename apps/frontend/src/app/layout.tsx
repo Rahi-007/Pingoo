@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Salsa, Roboto_Condensed } from "next/font/google";
 import ProviderConfig from "@/provider/providerConfig";
+import "../style/tailwind.utils.css";
 import "../style/globals.css";
+import Root from "./Root";
 
 const salsa = Salsa({
   variable: "--font-salsa",
@@ -28,7 +30,9 @@ export default function RootLayout({ children }: Readonly<IProps>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${salsa.variable} ${roboto.variable} antialiased`}>
-        <ProviderConfig>{children}</ProviderConfig>
+        <ProviderConfig>
+          <Root>{children}</Root>
+        </ProviderConfig>
       </body>
     </html>
   );
