@@ -1,9 +1,9 @@
+import Root from "./Root";
 import type { Metadata } from "next";
 import { Salsa, Roboto_Condensed } from "next/font/google";
 import ProviderConfig from "@/provider/providerConfig";
 import "../style/tailwind.utils.css";
 import "../style/globals.css";
-import Root from "./Root";
 
 const salsa = Salsa({
   variable: "--font-salsa",
@@ -28,7 +28,7 @@ interface IProps {
 
 export default function RootLayout({ children }: Readonly<IProps>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className={`${salsa.variable} ${roboto.variable} antialiased`}>
         <ProviderConfig>
           <Root>{children}</Root>

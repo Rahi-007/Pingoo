@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAppSelector } from "@/hooks/reduxHooks";
-import Loading from "../loading";
+import LoadingApp from "@/components/Common/LoadingApp";
 
 /** Paths that do not require a session (auth screens). */
 const PUBLIC_PATHS = new Set(["/login", "/register"]);
@@ -16,18 +16,19 @@ export function AuthRouteGuard() {
 
   useEffect(() => setMounted(true), []);
 
+  const isPublic = PUBLIC_PATHS.has(pathname);
+  const authed = Boolean(user);
+  const shouldAllow = mounted && isHydrated && (isPublic || authed);
+
   useEffect(() => {
     if (!mounted || !isHydrated) return;
 
-    if (PUBLIC_PATHS.has(pathname)) return;
-
-    const authed = Boolean(user);
-    if (!authed) {
+    if (!isPublic && !authed) {
       router.replace("/login");
     }
-  }, [mounted, isHydrated, pathname, user, router]);
+  }, [mounted, isHydrated, isPublic, authed, router]);
 
-  if (!mounted || !isHydrated) return <Loading />;
+  if (!shouldAllow) return <LoadingApp />;
 
   return null;
 }
