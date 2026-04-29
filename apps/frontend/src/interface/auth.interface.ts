@@ -1,7 +1,7 @@
 import { IUser } from "./user.interface";
 
 export interface ILoginPayload {
-  email: string;
+  userName: string;
   password: string;
 }
 
@@ -12,8 +12,18 @@ export interface IRegisterPayload {
   password: string;
 }
 
-export interface ILoginResponse {
+export interface ILoginResponseData {
   accessToken: string;
   refreshToken: string;
   user: IUser;
+}
+
+// API response format
+export interface ILoginResponse {
+  success: boolean;
+  message: string;
+  data: ILoginResponseData;
+  timestamp: string;
+  path: string;
+  statusCode?: number;
 }

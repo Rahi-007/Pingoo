@@ -11,7 +11,6 @@ import { fadeUpAnimation } from "@/lib/motion.utils";
 import { setAuth } from "@/context/slice/auth.slice";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, LogIn } from "lucide-react";
-
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import GInput from "@/components/generic/GInput";
@@ -20,7 +19,7 @@ const inputDark =
   "h-11 rounded-xl border border-zinc-300/70 bg-white/80 px-3.5 text-zinc-900 shadow-none placeholder:text-zinc-500/90 backdrop-blur-md transition-[border-color,background-color,box-shadow] focus-visible:border-cyan-500/40 focus-visible:bg-white focus-visible:shadow-[0_0_0_3px_rgba(14,116,144,0.10)] focus-visible:ring-0 dark:border-white/[0.12] dark:bg-white/[0.04] dark:text-slate-100 dark:placeholder:text-slate-400/80 dark:focus-visible:border-white/25 dark:focus-visible:bg-white/[0.07] dark:focus-visible:shadow-[0_0_0_3px_rgba(255,255,255,0.06)]";
 
 const LoginSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  userName: z.string().min(3, { message: "Password must be at least 6 characters" }),
   password: z.string().min(6, { message: "Password must be at least 6 characters" }),
 });
 
@@ -32,7 +31,7 @@ const LoginForm = () => {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      email: "",
+      userName: "",
       password: "",
     },
   });
@@ -41,15 +40,22 @@ const LoginForm = () => {
   const onSubmit = async (values: LoginFormValues) => {
     try {
       const res = await login(values);
-      localStorage.setItem("accessToken", res.accessToken);
-      localStorage.setItem("refreshToken", res.refreshToken);
-      localStorage.setItem("user", JSON.stringify(res.user));
-      setAxiosAuthToken(res.accessToken);
-      dispatch(setAuth(res));
-      router.replace("/");
-      // toast.success("Welcome Back 🎉");
+      const { accessToken, refreshToken, user } = res.data;
+
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem("user", JSON.stringify(user));
+      setAxiosAuthToken(accessToken);
+      dispatch(setAuth({ accessToken, refreshToken, user }));
+
+      // Wait for Redux state to update before redirecting
+      setTimeout(() => {
+        router.replace("/");
+      }, 100);
+
+      console.log("Welcome Back 🎉");
     } catch (error: unknown) {
-      // toast.error(error instanceof Error ? error.message : String(error));
+      console.error(error instanceof Error ? error.message : String(error));
     }
   };
 
@@ -59,9 +65,9 @@ const LoginForm = () => {
         <motion.div {...fadeUpAnimation(12, 0.35, 0.06)} className="space-y-2">
           <label className="ml-0.5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500 dark:text-slate-400/90">
             <span className="h-1 w-1 rounded-full bg-zinc-500/60 dark:bg-white/40" aria-hidden />
-            Email
+            User Name
           </label>
-          <GInput.Form type="email" name="email" label="" control={form.control} placeholder="you@example.com" className={inputDark} />
+          <GInput.Form type="text" name="userName" label="" control={form.control} placeholder="user007" className={inputDark} />
         </motion.div>
 
         <motion.div {...fadeUpAnimation(12, 0.35, 0.1)} className="space-y-2">
