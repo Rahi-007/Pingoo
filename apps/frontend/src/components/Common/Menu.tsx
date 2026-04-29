@@ -1,10 +1,15 @@
 "use client";
 
+import { logout } from "@/service/auth.service";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
-
 import { EllipsisVertical, LogOut, Users, Megaphone } from "lucide-react";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { useRouter } from "next/navigation";
+import { clearAuth } from "@/context/slice/auth.slice";
 
 const MenuButton = () => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -24,7 +29,15 @@ const MenuButton = () => {
           Create Channel
         </DropdownMenuItem>
 
-        <DropdownMenuItem className="flex items-center gap-2 text-red-500 cursor-pointer hover-bg-effect">
+        <DropdownMenuItem
+          className="flex items-center gap-2 text-red-500 cursor-pointer hover-bg-effect"
+          onClick={() => {
+            logout();
+            dispatch(clearAuth());
+            router.replace("/login");
+            console.log("You are logged out");
+          }}
+        >
           <LogOut className="w-4 h-4" />
           Logout
         </DropdownMenuItem>
