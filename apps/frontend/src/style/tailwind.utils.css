@@ -7,3 +7,7 @@
 .group:hover .hover-effect {
   @apply text-gray-600;
 }
+
+.hover-bg-effect {
+  @apply transition-colors delay-75 hover:bg-[#252828] hover:scale-[1.01];
+}
