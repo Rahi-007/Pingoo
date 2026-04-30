@@ -1,38 +1,63 @@
 "use client";
 
-import { Settings } from "lucide-react";
+import { Archive, MessageCircleHeart, Settings } from "lucide-react";
 import GToolTip from "../feature/Tooltip";
 import Image from "next/image";
-import Link from "next/link";
 
-const Sidebar = () => {
+export type ViewType = "chat" | "archive" | "settings" | "profile";
+interface IProps {
+  onChange: React.Dispatch<React.SetStateAction<ViewType>>;
+}
+
+const Sidebar = ({onChange}: IProps) => {
   return (
     <div className="flex flex-col justify-between items-center h-screen py-4">
-      <GToolTip title="Profile">
-        <Link href="/profile" className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors">
-          <Image src="/profile.jpeg" alt="profile Image" height={100} width={100} className="h-8 w-8 rounded-full" />
-        </Link>
-      </GToolTip>
-      <GToolTip title="Settings">
-        <div className="mb-2 p-1.5 rounded-full hover:bg-gray-700/30 transition-colors">
-          <Settings className="w-8 h-8 transition-transform duration-300 hover:rotate-90" />
-        </div>
-      </GToolTip>
+      <div className="">
+        <GToolTip title="Chat">
+          <div
+            className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors"
+            onClick={() => {
+              onChange('chat');
+            }}
+          >
+            <MessageCircleHeart className="w-8 h-8 transition-transform duration-300 hover:scale-105" />
+          </div>
+        </GToolTip>
+        <GToolTip title="Archive">
+          <div
+            className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors"
+            onClick={() => {
+              onChange('archive');
+            }}
+          >
+            <Archive className="w-8 h-8 transition-transform duration-300 hover:scale-105" />
+          </div>
+        </GToolTip>
+      </div>
+      <div className="">
+        <GToolTip title="Settings">
+          <div
+            className="mb-2 p-1.5 rounded-full hover:bg-gray-700/30 transition-colors"
+            onClick={() => {
+              onChange('settings');
+            }}
+          >
+            <Settings className="w-8 h-8 transition-transform duration-300 hover:rotate-90 hover:scale-105" />
+          </div>
+        </GToolTip>
+        <GToolTip title="Profile">
+          <div
+            className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors"
+            onClick={() => {
+              onChange('profile');
+            }}>
+            <Image src="/profile.jpeg" alt="profile Image" height={100} width={100} className="h-8 w-8 rounded-full hover:scale-105" />
+          </div>
+        </GToolTip>
+
+      </div>
     </div>
   );
 };
 
 export default Sidebar;
-
-// <Link href="/" className="">
-//   <CircleDot className="w-6 h-6" />
-// </Link>
-// <Link href="/" className="">
-//   <Users className="w-6 h-6" />
-// </Link>
-// <Link href="/" className="">
-//   <Radio className="w-6 h-6" />
-// </Link>
-// <Link href="/" className="">
-//   <Archive className="w-6 h-6" />
-// </Link>
