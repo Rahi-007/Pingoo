@@ -1,23 +1,20 @@
 "use client";
 
-import { useAppDispatch } from "@/hooks/reduxHooks";
+import { useEffect } from "react";
 import { IUser } from "@/interface/user.interface";
 import { setAxiosAuthToken } from "@/service/auth.service";
-import { useEffect } from "react";
-import { AuthRouteGuard } from "./auth/AuthRouteGuard";
-import { setAuth, setHydrated } from "@/context/slice/auth.slice";
-
-const ACCESS_TOKEN_KEY = "accessToken";
-const REFRESH_TOKEN_KEY = "refreshToken";
-const USER_KEY = "user";
+import { setAuth } from "@/context/slice/auth.slice";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { useRouter } from "next/navigation";
 
 export default function Root({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
+  const route = useRouter();
 
   useEffect(() => {
-    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
-    const userString = localStorage.getItem(USER_KEY);
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    const userString = localStorage.getItem("user");
 
     setAxiosAuthToken(accessToken);
 
@@ -25,13 +22,12 @@ export default function Root({ children }: { children: React.ReactNode }) {
       const user = JSON.parse(userString) as IUser;
       dispatch(setAuth({ accessToken, refreshToken, user }));
     } else {
-      dispatch(setHydrated());
+      route.push("/login");
     }
   }, [dispatch]);
 
   return (
     <>
-      <AuthRouteGuard />
       {children}
     </>
   );

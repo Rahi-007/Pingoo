@@ -5,14 +5,12 @@ export interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   user: IUser | null;
-  isHydrated: boolean;
 }
 
 const initialState: AuthState = {
   accessToken: null,
   refreshToken: null,
   user: null,
-  isHydrated: false,
 };
 
 export interface SetAuthPayload {
@@ -29,20 +27,15 @@ export const authSlice = createSlice({
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
       state.user = action.payload.user;
-      state.isHydrated = true;
     },
     clearAuth: state => {
       state.accessToken = null;
       state.refreshToken = null;
       state.user = null;
-      state.isHydrated = false;
-    },
-    setHydrated: state => {
-      state.isHydrated = true;
     },
   },
 });
 
-export const { setAuth, clearAuth, setHydrated } = authSlice.actions;
+export const { setAuth, clearAuth } = authSlice.actions;
 
 export default authSlice.reducer;
