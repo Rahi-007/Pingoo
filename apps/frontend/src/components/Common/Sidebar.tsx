@@ -9,52 +9,52 @@ interface IProps {
   onChange: React.Dispatch<React.SetStateAction<ViewType>>;
 }
 
-const Sidebar = ({onChange}: IProps) => {
+const Sidebar = ({ onChange }: IProps) => {
   return (
     <div className="flex flex-col justify-between items-center h-screen py-4">
       <div className="">
         <GToolTip title="Chat">
           <div
-            className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors"
+            className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors group"
             onClick={() => {
-              onChange('chat');
+              onChange("chat");
             }}
           >
-            <MessageCircleHeart className="w-8 h-8 transition-transform duration-300 hover:scale-105" />
+            <MessageCircleHeart className="w-8 h-8 transition-transform duration-300 group-hover:scale-105" />
           </div>
         </GToolTip>
         <GToolTip title="Archive">
           <div
-            className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors"
+            className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors group"
             onClick={() => {
-              onChange('archive');
+              onChange("archive");
             }}
           >
-            <Archive className="w-8 h-8 transition-transform duration-300 hover:scale-105" />
+            <Archive className="w-8 h-8 transition-transform duration-300 group-hover:scale-105" />
           </div>
         </GToolTip>
       </div>
       <div className="">
         <GToolTip title="Settings">
           <div
-            className="mb-2 p-1.5 rounded-full hover:bg-gray-700/30 transition-colors"
+            className="mb-2 p-1.5 rounded-full hover:bg-gray-700/30 transition-colors group"
             onClick={() => {
-              onChange('settings');
+              onChange("settings");
             }}
           >
-            <Settings className="w-8 h-8 transition-transform duration-300 hover:rotate-90 hover:scale-105" />
+            <Settings className="w-8 h-8 transition-transform duration-300 hover:rotate-90 group-hover:scale-105" />
           </div>
         </GToolTip>
         <GToolTip title="Profile">
           <div
-            className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors"
+            className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors group"
             onClick={() => {
-              onChange('profile');
-            }}>
-            <Image src="/profile.jpeg" alt="profile Image" height={100} width={100} className="h-8 w-8 rounded-full hover:scale-105" />
+              onChange("profile");
+            }}
+          >
+            <Image src="/profile.jpeg" alt="profile Image" height={100} width={100} className="h-8 w-8 rounded-full group-hover:scale-105" />
           </div>
         </GToolTip>
-
       </div>
     </div>
   );

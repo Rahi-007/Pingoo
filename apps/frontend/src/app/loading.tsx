@@ -25,7 +25,6 @@ export default function Loading() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white dark:bg-black">
-      
       {/* Logo Animation */}
       <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.5 }} className="mb-8">
         <h1 className="text-4xl font-bold text-gray-700">Pingoo</h1>
@@ -57,7 +56,6 @@ export default function Loading() {
       <motion.p key={progress} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-lg dark:text-gray-700">
         {progress}%
       </motion.p>
-      
     </div>
   );
 }

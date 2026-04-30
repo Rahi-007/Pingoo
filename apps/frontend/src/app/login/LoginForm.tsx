@@ -59,16 +59,19 @@ const LoginForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 border-2 rounded-md w-100">
-        <h1 className="text-2xl py-4" >Login Form</h1>
+        <h1 className="text-2xl py-4">Login Form</h1>
         <div className="px-4">
           <GInput.Form type="text" name="userName" label="User Name" control={form.control} placeholder="user name" className="mb-4" />
-          <GInput.Form type={showPass ? "text" : "password"} name="password" label="Password" control={form.control} placeholder="password" className="mb-4" />
+          <GInput.Form
+            type={showPass ? "text" : "password"}
+            name="password"
+            label="Password"
+            control={form.control}
+            placeholder="password"
+            className="mb-4"
+          />
           <div className="flex justify-end">
-            <Button
-              type="submit"
-              disabled={form.formState.isSubmitting}
-
-            >
+            <Button type="submit" disabled={form.formState.isSubmitting}>
               <span className={form.formState.isSubmitting ? "invisible" : "inline-flex items-center gap-2"}>
                 <LogIn className="h-4 w-4" />
                 Sign in

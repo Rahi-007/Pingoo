@@ -18,7 +18,7 @@ const MenuButton = () => {
         </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-42 bg-[#1d1f1f]">
+      <DropdownMenuContent className="w-42 bg-[#1d1f1f]" align="start">
         <DropdownMenuItem className="flex items-center gap-2 cursor-pointer hover-bg-effect">
           <Users className="w-4 h-4" />
           Create Group

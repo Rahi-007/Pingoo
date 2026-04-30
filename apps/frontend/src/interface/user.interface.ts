@@ -32,8 +32,6 @@ export interface IAddUser {
   address?: string;
 }
 
-
 export interface IUserData {
   data: IUser;
 }
-

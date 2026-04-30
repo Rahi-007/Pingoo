@@ -1,26 +1,26 @@
-"use client"
+"use client";
 
 import { useAppSelector } from "@/hooks/reduxHooks";
-import useAsyncAction from "@/hooks/useAsyncAction"
-import { getUserById } from "@/service/user.service"
+import useAsyncAction from "@/hooks/useAsyncAction";
+import { getUserById } from "@/service/user.service";
 import { useEffect } from "react";
 
 const page = () => {
-    const userId = useAppSelector((state) => state.auth.user?.id);
-    const fnLoadProfile = useAsyncAction(getUserById);
-    const data = fnLoadProfile.data?.data;
+  const userId = useAppSelector(state => state.auth.user?.id);
+  const fnLoadProfile = useAsyncAction(getUserById);
+  const data = fnLoadProfile.data?.data;
 
-    useEffect(() => {
-        fnLoadProfile.action(Number(userId));
-    }, [])
+  useEffect(() => {
+    fnLoadProfile.action(Number(userId));
+  }, []);
 
-    console.log(fnLoadProfile.data);
+  console.log(fnLoadProfile.data);
 
-    return (
-        <div>
-            {data?.firstName} {data?.lastName} profile !!
-        </div>
-    )
-}
+  return (
+    <div>
+      {data?.firstName} {data?.lastName} profile !!
+    </div>
+  );
+};
 
-export default page
+export default page;
