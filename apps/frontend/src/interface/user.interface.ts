@@ -31,3 +31,9 @@ export interface IAddUser {
   password: string;
   address?: string;
 }
+
+
+export interface IUserData {
+  data: IUser;
+}
+

@@ -135,25 +135,6 @@ export class AuthController {
   }
 
   // Y======================================
-  // Y-----------{ Logout user }------------
-  // Y======================================
-  @Post("logout")
-  @ApiBearerAuth("JWT-auth")
-  @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: "Logout user (client-side)" })
-  @ApiResponse({ status: 200, description: "Logout successful" })
-  @ApiResponse({
-    status: 401,
-    description: "Unauthorized (invalid or missing token)",
-  })
-  @HttpCode(HttpStatus.OK)
-  async logout(): Promise<{ message: string }> {
-    return {
-      message: "Logout successful. Please remove tokens on client side.",
-    };
-  }
-
-  // Y======================================
   // Y------{ Refresh access token }--------
   // Y======================================
   @Post("refresh")

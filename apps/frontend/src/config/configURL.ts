@@ -20,7 +20,7 @@ export const API_URLS = {
   user: {
     all: (s?: Record<string, any>) => api(["user", objectToUrlParams(s || {})].join("?")),
     add: () => api("user"),
-    get: (id: number) => api(`auth/users/${id}`),
+    get: (id: number) => api(`user/${id}`),
     create: () => api("user"),
     update: (id: number) => api(`user/${id}`),
     delete: (id: number) => api(`user/${id}`),

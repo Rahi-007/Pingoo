@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { API_URLS } from "@/config/configURL";
 import { Pagination } from "@/interface/base.interface";
-import { IAddUser, IUser } from "@/interface/user.interface";
+import { IAddUser, IUser, IUserData } from "@/interface/user.interface";
 
 interface IUserRes extends Pagination<IUser> {}
 export function loadUsers(searchOptions?: Record<string, any>) {
@@ -16,9 +16,9 @@ export function loadUsers(searchOptions?: Record<string, any>) {
 }
 
 export function getUserById(id: number) {
-  return new Promise<IUser>(async (resolve, reject) => {
+  return new Promise<IUserData>(async (resolve, reject) => {
     try {
-      const response = await axios.get<any, AxiosResponse<IUser>>(API_URLS.user.get(id));
+      const response = await axios.get<any, AxiosResponse<IUserData>>(API_URLS.user.get(id));
       resolve(response.data);
     } catch (error: any) {
       reject(error.response?.data?.message || "Something went wrong");
