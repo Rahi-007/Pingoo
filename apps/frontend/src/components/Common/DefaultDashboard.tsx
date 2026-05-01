@@ -2,7 +2,7 @@ import { MessageCircleHeart, Send, UserPlus } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import Link from "next/link";
 
-const HomeCard = () => {
+const DefaultDashboard = () => {
   const miniCard = [
     {
       title: "Add New Contact",
@@ -41,4 +41,4 @@ const HomeCard = () => {
   );
 };
 
-export default HomeCard;
+export default DefaultDashboard;
