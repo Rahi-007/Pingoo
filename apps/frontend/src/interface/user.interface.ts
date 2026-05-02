@@ -16,9 +16,6 @@ export interface IUser {
   isVerified: boolean;
   isBlocked: boolean;
   role: string;
-  trustScore?: number;
-  totalReports?: number;
-  correctReports?: number;
   createdAt: Date;
   updatedAt: Date;
 }
