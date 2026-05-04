@@ -35,13 +35,7 @@ const ProfileSection = () => {
       </div>
       <div className="p-4 flex justify-center items-center">
         <div className="p-1 rounded-full bg-gray-700/40 transition-colors">
-          <Image
-            src={data?.avatar || "/profile.jpeg"}
-            alt="profile Image"
-            height={100}
-            width={100}
-            className="h-36 w-36 rounded-full"
-          />
+          <Image src={data?.avatar || "/profile.jpeg"} alt="profile Image" height={100} width={100} className="h-36 w-36 rounded-full" />
         </div>
       </div>
       <div className="mt-4 space-y-3 text-sm">
@@ -77,11 +71,7 @@ const ProfileSection = () => {
           <p>{timeAgo(data?.lastLoggedIn)}</p>
 
           <p className="text-muted-foreground">Joined</p>
-          <p>
-            {data?.createdAt
-              ? new Date(data.createdAt).toLocaleDateString()
-              : "-"}
-          </p>
+          <p>{data?.createdAt ? new Date(data.createdAt).toLocaleDateString() : "-"}</p>
         </div>
       </div>
 

@@ -54,10 +54,6 @@ async function bootstrap() {
     logger.log(`🚀 Application is running on: http://localhost:${port}`);
     logger.log(`📚 API Documentation: http://localhost:${port}/api-docs`);
     logger.log(`🌐 Environment: ${process.env.NODE_ENV || "development"}`);
-
-    // Log CORS origins
-    const corsOrigins = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",").map(origin => origin.trim()) : ["http://localhost:3000"];
-    logger.log(`🔒 CORS Origins: ${corsOrigins.join(", ")}`);
   } catch (error) {
     logger.error("❌ Failed to start application:", error);
     process.exit(1);

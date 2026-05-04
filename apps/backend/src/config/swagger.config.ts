@@ -6,8 +6,8 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
  */
 export function setupSwagger(app: INestApplication): void {
   const config = new DocumentBuilder()
-    .setTitle("Nest.js Boilerplate")
-    .setDescription("API documentation for Nest.js Boilerplate by Rahi")
+    .setTitle("Pingoo")
+    .setDescription("API documentation for Pingoo by Rahi")
     .setVersion("1.0.0")
     .addBearerAuth(
       {
@@ -33,6 +33,6 @@ export function setupSwagger(app: INestApplication): void {
       filter: true,
       showRequestDuration: true,
     },
-    customSiteTitle: "Nest.js Boilerplate API Documentation",
+    customSiteTitle: "Pingoo API Documentation",
   });
 }

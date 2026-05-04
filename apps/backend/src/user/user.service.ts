@@ -9,97 +9,97 @@ export class UserService {
   constructor(private readonly em: EntityManager) {}
 
   // Get all users
-  async findAll(): Promise<IUser[]> {
-    return this.em.find(UserSchema, {});
-  }
+  // async findAll(): Promise<IUser[]> {
+  //   return this.em.find(UserSchema, {});
+  // }
 
-  // Get user by ID
-  async findOne(id: number): Promise<IUser> {
-    const user = await this.em.findOne(UserSchema, { id });
+  // Get user by userName
+  async findOne(userName: string): Promise<IUser> {
+    const user = await this.em.findOne(UserSchema, { userName });
     if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(`User not found`);
     }
     return user;
   }
 
   // Update an existing user
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<IUser> {
-    const user = await this.findOne(id);
+  // async update(id: number, updateUserDto: UpdateUserDto): Promise<IUser> {
+  //   const user = await this.findOne(id);
 
-    // Check if email is being changed and already exists for another user
-    if (updateUserDto.email && updateUserDto.email !== user.email) {
-      const existingEmail = await this.em.findOne(UserSchema, {
-        email: updateUserDto.email,
-      });
-      if (existingEmail && existingEmail.id !== id) {
-        throw new ConflictException("Email already exists");
-      }
-    }
+  //   // Check if email is being changed and already exists for another user
+  //   if (updateUserDto.email && updateUserDto.email !== user.email) {
+  //     const existingEmail = await this.em.findOne(UserSchema, {
+  //       email: updateUserDto.email,
+  //     });
+  //     if (existingEmail && existingEmail.id !== id) {
+  //       throw new ConflictException("Email already exists");
+  //     }
+  //   }
 
-    // Check if phone is being changed and already exists for another user
-    if (updateUserDto.phone && updateUserDto.phone !== user.phone) {
-      const existingPhone = await this.em.findOne(UserSchema, {
-        phone: updateUserDto.phone,
-      });
-      if (existingPhone && existingPhone.id !== id) {
-        throw new ConflictException("Phone number already exists");
-      }
-    }
+  //   // Check if phone is being changed and already exists for another user
+  //   if (updateUserDto.phone && updateUserDto.phone !== user.phone) {
+  //     const existingPhone = await this.em.findOne(UserSchema, {
+  //       phone: updateUserDto.phone,
+  //     });
+  //     if (existingPhone && existingPhone.id !== id) {
+  //       throw new ConflictException("Phone number already exists");
+  //     }
+  //   }
 
-    // Update only provided fields
-    if (updateUserDto.firstName !== undefined) {
-      user.firstName = updateUserDto.firstName;
-    }
-    if (updateUserDto.lastName !== undefined) {
-      user.lastName = updateUserDto.lastName;
-    }
-    if (updateUserDto.phone !== undefined) {
-      user.phone = updateUserDto.phone;
-    }
-    if (updateUserDto.email !== undefined) {
-      user.email = updateUserDto.email;
-    }
-    if (updateUserDto.password !== undefined) {
-      // Hash new password
-      const saltRounds = 10;
-      user.passHash = await bcrypt.hash(updateUserDto.password, saltRounds);
-    }
-    if (updateUserDto.address !== undefined) {
-      user.address = updateUserDto.address;
-    }
-    if (updateUserDto.dob !== undefined) {
-      user.dob = updateUserDto.dob ? new Date(updateUserDto.dob) : undefined;
-    }
-    if (updateUserDto.gender !== undefined) {
-      user.gender = updateUserDto.gender;
-    }
-    if (updateUserDto.bloodGroup !== undefined) {
-      user.bloodGroup = updateUserDto.bloodGroup;
-    }
-    if (updateUserDto.avatar !== undefined) {
-      user.avatar = updateUserDto.avatar;
-    }
-    if (updateUserDto.isVerified !== undefined) {
-      user.isVerified = updateUserDto.isVerified;
-    }
-    if (updateUserDto.isBlocked !== undefined) {
-      user.isBlocked = updateUserDto.isBlocked;
-    }
-    if (updateUserDto.role !== undefined) {
-      user.role = updateUserDto.role;
-    }
+  //   // Update only provided fields
+  //   if (updateUserDto.firstName !== undefined) {
+  //     user.firstName = updateUserDto.firstName;
+  //   }
+  //   if (updateUserDto.lastName !== undefined) {
+  //     user.lastName = updateUserDto.lastName;
+  //   }
+  //   if (updateUserDto.phone !== undefined) {
+  //     user.phone = updateUserDto.phone;
+  //   }
+  //   if (updateUserDto.email !== undefined) {
+  //     user.email = updateUserDto.email;
+  //   }
+  //   if (updateUserDto.password !== undefined) {
+  //     // Hash new password
+  //     const saltRounds = 10;
+  //     user.passHash = await bcrypt.hash(updateUserDto.password, saltRounds);
+  //   }
+  //   if (updateUserDto.address !== undefined) {
+  //     user.address = updateUserDto.address;
+  //   }
+  //   if (updateUserDto.dob !== undefined) {
+  //     user.dob = updateUserDto.dob ? new Date(updateUserDto.dob) : undefined;
+  //   }
+  //   if (updateUserDto.gender !== undefined) {
+  //     user.gender = updateUserDto.gender;
+  //   }
+  //   if (updateUserDto.bloodGroup !== undefined) {
+  //     user.bloodGroup = updateUserDto.bloodGroup;
+  //   }
+  //   if (updateUserDto.avatar !== undefined) {
+  //     user.avatar = updateUserDto.avatar;
+  //   }
+  //   if (updateUserDto.isVerified !== undefined) {
+  //     user.isVerified = updateUserDto.isVerified;
+  //   }
+  //   if (updateUserDto.isBlocked !== undefined) {
+  //     user.isBlocked = updateUserDto.isBlocked;
+  //   }
+  //   if (updateUserDto.role !== undefined) {
+  //     user.role = updateUserDto.role;
+  //   }
 
-    // Update timestamp
-    user.updatedAt = new Date();
+  //   // Update timestamp
+  //   user.updatedAt = new Date();
 
-    await this.em.flush();
-    return user;
-  }
+  //   await this.em.flush();
+  //   return user;
+  // }
 
   // Delete a user
-  async remove(id: number): Promise<void> {
-    const user = await this.findOne(id);
-    await this.em.remove(user);
+  async remove(userName: string): Promise<void> {
+    const user = await this.findOne(userName);
+    this.em.remove(user);
     await this.em.flush();
   }
 }

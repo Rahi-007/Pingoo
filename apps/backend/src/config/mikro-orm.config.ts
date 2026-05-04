@@ -34,7 +34,7 @@ export const mikroOrmConfigFactory = (configService: ConfigurationService) => {
     dbName: dbConfig.name,
     user: dbConfig.user,
     password: dbConfig.password,
-    entities: [UserSchema],
+    entities: [UserSchema, SettingSchema],
     debug: configService.isDevelopment,
     allowGlobalContext: true,
     pool: {
