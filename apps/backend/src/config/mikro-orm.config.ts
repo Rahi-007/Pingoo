@@ -1,10 +1,11 @@
 import { defineConfig } from "@mikro-orm/postgresql";
 import { UserSchema } from "../auth/entity/user.entity";
 import { ConfigurationService } from "./configuration";
+import { SettingSchema } from "../auth/entity/setting.entity";
 
 export default defineConfig({
   clientUrl: process.env.DATABASE_URL,
-  entities: [UserSchema],
+  entities: [UserSchema, SettingSchema],
   debug: false,
   allowGlobalContext: true,
   pool: {
