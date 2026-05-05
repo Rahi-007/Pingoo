@@ -1,8 +1,5 @@
-import * as dotenv from "dotenv";
 import { JwtModuleOptions } from "@nestjs/jwt";
 import { StringValue } from "ms";
-
-dotenv.config();
 
 // Factory functions using ConfigurationService
 export const jwtConfigFactory = (): JwtModuleOptions => ({

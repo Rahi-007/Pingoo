@@ -1,11 +1,8 @@
-import * as dotenv from "dotenv";
 import * as bcrypt from "bcryptjs";
 import { MikroORM } from "@mikro-orm/postgresql";
 import { UserSchema } from "../auth/entity/user.entity";
 import { Role } from "../utils/enums";
 import mikroOrmConfig from "./mikro-orm.config";
-
-dotenv.config();
 
 // seeding script for development
 export async function runSeeding(refresh = true) {

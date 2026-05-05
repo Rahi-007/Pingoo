@@ -1,9 +1,6 @@
-import * as dotenv from "dotenv";
 import { Controller, Get } from "@nestjs/common";
 import { HealthCheck, HealthCheckService, HttpHealthIndicator, MemoryHealthIndicator, DiskHealthIndicator } from "@nestjs/terminus";
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
-
-dotenv.config();
 
 @ApiTags("Health")
 @Controller("health")

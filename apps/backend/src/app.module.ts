@@ -5,9 +5,19 @@ import { CustomJwtModule } from "./config/jwt/jwt.module";
 import { HealthModule } from "./health/health.module";
 import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./user/user.module";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
-  imports: [MikroOrmModule.forRoot(mikroOrmConfigFactory()), CustomJwtModule, AuthModule, UserModule, HealthModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MikroOrmModule.forRoot(mikroOrmConfigFactory()),
+    CustomJwtModule,
+    AuthModule,
+    UserModule,
+    HealthModule,
+  ],
   controllers: [],
   providers: [],
 })

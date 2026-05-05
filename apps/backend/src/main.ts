@@ -17,10 +17,7 @@ async function bootstrap() {
   const logger = new Logger("Bootstrap");
   try {
     logger.log("🔄 Creating NestJS application...");
-    const app = await NestFactory.create(AppModule, {
-      logger: ["error", "warn", "log", "debug", "verbose"],
-      bufferLogs: true,
-    });
+    const app = await NestFactory.create(AppModule);
 
     // Apply security middleware (helmet, compression, cookie-parser)
     setupSecurity(app);
