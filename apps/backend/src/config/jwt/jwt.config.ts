@@ -1,18 +1,20 @@
+import * as dotenv from "dotenv";
 import { JwtModuleOptions } from "@nestjs/jwt";
 import { StringValue } from "ms";
-import { ConfigurationService } from "../configuration";
+
+dotenv.config();
 
 // Factory functions using ConfigurationService
-export const jwtConfigFactory = (configService: ConfigurationService): JwtModuleOptions => ({
-  secret: configService.jwt.secret,
+export const jwtConfigFactory = (): JwtModuleOptions => ({
+  secret: process.env.JWT_SECRET!,
   signOptions: {
-    expiresIn: configService.jwt.expiresIn as StringValue,
+    expiresIn: process.env.JWT_EXPIRES_IN as StringValue,
   },
 });
 
-export const jwtRefreshConfigFactory = (configService: ConfigurationService): JwtModuleOptions => ({
-  secret: configService.jwt.refreshSecret,
+export const jwtRefreshConfigFactory = (): JwtModuleOptions => ({
+  secret: process.env.JWT_REFRESH_SECRET!,
   signOptions: {
-    expiresIn: configService.jwt.refreshExpiresIn as StringValue,
+    expiresIn: process.env.JWT_REFRESH_EXPIRES_IN as StringValue,
   },
 });

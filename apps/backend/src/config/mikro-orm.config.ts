@@ -1,11 +1,15 @@
+import * as dotenv from "dotenv";
 import { defineConfig } from "@mikro-orm/postgresql";
 import { UserSchema } from "../auth/entity/user.entity";
-import { ConfigurationService } from "./configuration";
 import { SettingSchema } from "../auth/entity/setting.entity";
+
+dotenv.config();
+
+export const ENTITIES = [UserSchema, SettingSchema];
 
 export default defineConfig({
   clientUrl: process.env.DATABASE_URL,
-  entities: [UserSchema, SettingSchema],
+  entities: ENTITIES,
   debug: false,
   allowGlobalContext: true,
   pool: {
@@ -24,18 +28,10 @@ export default defineConfig({
 });
 
 // Alternative factory-based configuration for MikroOrmModule.forRootAsync
-export const mikroOrmConfigFactory = (configService: ConfigurationService) => {
-  const dbConfig = configService.database;
-
+export const mikroOrmConfigFactory = () => {
   return defineConfig({
-    clientUrl: dbConfig.url,
-    host: dbConfig.host,
-    port: dbConfig.port,
-    dbName: dbConfig.name,
-    user: dbConfig.user,
-    password: dbConfig.password,
-    entities: [UserSchema, SettingSchema],
-    debug: configService.isDevelopment,
+    clientUrl: process.env.DATABASE_URL,
+    entities: ENTITIES,
     allowGlobalContext: true,
     pool: {
       min: 2,

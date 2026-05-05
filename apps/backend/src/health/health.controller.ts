@@ -1,7 +1,9 @@
+import * as dotenv from "dotenv";
 import { Controller, Get } from "@nestjs/common";
 import { HealthCheck, HealthCheckService, HttpHealthIndicator, MemoryHealthIndicator, DiskHealthIndicator } from "@nestjs/terminus";
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { ConfigurationService } from "../config/configuration";
+
+dotenv.config();
 
 @ApiTags("Health")
 @Controller("health")
@@ -10,8 +12,7 @@ export class HealthController {
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
     private memory: MemoryHealthIndicator,
-    private disk: DiskHealthIndicator,
-    private configService: ConfigurationService
+    private disk: DiskHealthIndicator
   ) {}
 
   @Get()
@@ -28,7 +29,7 @@ export class HealthController {
   check() {
     return this.health.check([
       // HTTP health check (self)
-      () => this.http.pingCheck("self", `http://localhost:${this.configService.app.port}/api/health/ping`),
+      () => this.http.pingCheck("self", `http://localhost:${process.env.PORT}/api/health/ping`),
       // Memory health check
       () => this.memory.checkHeap("memory_heap", 150 * 1024 * 1024), // 150MB threshold
       () => this.memory.checkRSS("memory_rss", 300 * 1024 * 1024), // 300MB threshold
@@ -66,7 +67,6 @@ export class HealthController {
     return {
       service: "Nest.js Boilerplate",
       version: "1.0.0",
-      environment: this.configService.app.environment,
       nodeVersion: process.version,
       platform: process.platform,
       uptime: process.uptime(),
