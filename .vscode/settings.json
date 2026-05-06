@@ -1,5 +1,57 @@
 {
-    "css.validate": false,
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.minimap.enabled": true,
+  "editor.stickyScroll.enabled": false,
+
+  // better comments settings
+  "better-comments.tags": [
+    {
+      "tag": "R",
+      "color": "#FF2D00",
+      "italic": true,
+    },
+    {
+      "tag": "B",
+      "color": "#3498DB",
+      "italic": true,
+    },
+    {
+      "tag": "//",
+      "color": "#474747",
+      "strikethrough": true,
+      "italic": true,
+    },
+    {
+      "tag": "O",
+      "color": "#FF8C00",
+    },
+    {
+      "tag": "G",
+      "color": "#98C379",
+      "italic": true,
+    },
+    {
+      "tag": "I",
+      "color": "#6610f2",
+      "italic": true,
+    },
+    {
+      "tag": "Y",
+      "color": "#ffc107",
+      "italic": true,
+    },
+    {
+      "tag": "W",
+      "color": "#fff3cd",
+      "italic": true,
+    },
+    {
+      "tag": "D",
+      "color": "#000000",
+      "italic": true,
+    },
+  ],
+  "css.validate": false,
     "cSpell.words": [
         "Bisakto",
         "Rahi",
@@ -11,51 +63,48 @@
         "Pingoo",
         "turbopack"
     ],
-    "better-comments.tags": [
-    {
-      "tag": "R",
-      "color": "#FF2D00",
-      "italic": true
-    },
-    {
-      "tag": "B",
-      "color": "#3498DB",
-      "italic": true
-    },
-    {
-      "tag": "//",
-      "color": "#474747",
-      "strikethrough": true,
-      "italic": true
-    },
-    {
-      "tag": "O",
-      "color": "#FF8C00"
-    },
-    {
-      "tag": "G",
-      "color": "#98C379",
-      "italic": true
-    },
-    {
-      "tag": "I",
-      "color": "#6610f2",
-      "italic": true
-    },
-    {
-      "tag": "Y",
-      "color": "#ffc107",
-      "italic": true
-    },
-    {
-      "tag": "W",
-      "color": "#fff3cd",
-      "italic": true
-    },
-    {
-      "tag": "D",
-      "color": "#000000",
-      "italic": true
-    }
-  ]
+
+  // format on save
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null,
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "always",
+  },
+
+  "prettier.htmlWhitespaceSensitivity": "strict",
+  "prettier.endOfLine": "auto",
+  "prettier.bracketSameLine": true,
+  "codeium.enableConfig": {
+    "*": true,
+    "typescriptreact": false,
+  },
+
+  "php.validate.executablePath": "C:\\xampp\\php\\php.exe",
+
+  "roo-cline.debug": true,
+  "roo-cline.allowedCommands": ["git log", "git diff", "git show"],
+
+  "git.autofetch": true,
+  "gitlens.views.scm.grouped.views": {
+    "commits": true,
+    "branches": true,
+    "remotes": true,
+    "stashes": true,
+    "tags": true,
+    "worktrees": true,
+    "contributors": true,
+    "fileHistory": false,
+    "repositories": false,
+    "searchAndCompare": false,
+    "launchpad": false,
+  },
+  "chat.disableAIFeatures": true,
 }

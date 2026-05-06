@@ -1,7 +1,7 @@
-import * as dotenv from "dotenv";
 import { defineConfig } from "@mikro-orm/postgresql";
-import { UserSchema } from "../auth/entity/user.entity";
-import { SettingSchema } from "../auth/entity/setting.entity";
+import * as dotenv from "dotenv";
+import { SettingSchema } from "../auth/entities/setting.entity";
+import { UserSchema } from "../auth/entities/user.entity";
 
 dotenv.config();
 

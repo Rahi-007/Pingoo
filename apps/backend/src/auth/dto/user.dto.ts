@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional, PartialType } from "@nestjs/swagger";
-import { Expose, Transform } from "class-transformer";
-import { IsBoolean, IsDate, IsDateString, IsEnum, IsInt, IsOptional, IsString } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsBoolean, IsDateString, IsEnum, IsOptional, IsString } from "class-validator";
 import { BloodGroup, Gender, Role } from "../../utils/enums";
 
 export class CreateUserDto {
@@ -113,77 +113,3 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}
-
-export class UserRes {
-  @Expose()
-  @IsInt()
-  id!: number;
-
-  @Expose()
-  @IsString()
-  firstName!: string;
-
-  @Expose()
-  @IsString()
-  @IsOptional()
-  lastName?: string;
-
-  @Expose()
-  @IsString()
-  @IsOptional()
-  phone?: string;
-
-  @Expose()
-  @IsString()
-  email!: string;
-
-  @Expose()
-  @IsString()
-  @IsOptional()
-  address?: string;
-
-  @Expose()
-  @IsString()
-  @IsOptional()
-  avatar?: string;
-
-  @Expose()
-  @IsDate()
-  @IsOptional()
-  dob?: Date;
-
-  @Expose()
-  @IsDate()
-  @IsOptional()
-  lastLoggedIn?: Date;
-
-  @Expose()
-  @IsString()
-  @IsOptional()
-  gender?: string;
-
-  @Expose()
-  @IsString()
-  @IsOptional()
-  bloodGroup!: string;
-
-  @Expose()
-  @IsBoolean()
-  isVerified!: boolean;
-
-  @Expose()
-  @IsBoolean()
-  isBlocked!: boolean;
-
-  @Expose()
-  @IsEnum(Role)
-  role!: Role;
-
-  @Expose()
-  @IsDate()
-  createdAt!: Date;
-
-  @Expose()
-  @IsDate()
-  updatedAt!: Date;
-}

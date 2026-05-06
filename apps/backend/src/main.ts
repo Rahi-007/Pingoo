@@ -1,13 +1,13 @@
-import * as dotenv from "dotenv";
-import { NestFactory } from "@nestjs/core";
 import { Logger } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import * as dotenv from "dotenv";
 import { AppModule } from "./app.module";
 import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
-import { TransformInterceptor } from "./common/interceptors/transform.interceptor";
 import { TimeoutInterceptor } from "./common/interceptors/timeout.interceptor";
-import { setupSecurity } from "./config/security.config";
+import { TransformInterceptor } from "./common/interceptors/transform.interceptor";
 import { setupCors } from "./config/cors.config";
 import { setupPipes } from "./config/pipe.config";
+import { setupSecurity } from "./config/security.config";
 import { setupSwagger } from "./config/swagger.config";
 
 // Load environment variables

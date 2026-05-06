@@ -1,17 +1,17 @@
 import { Body, Controller, HttpCode, HttpStatus, InternalServerErrorException, Post, UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { CustomJwtService } from "../config/jwt/jwt.service";
 import { toResponse } from "../utils/response";
 import { AuthService } from "./auth.service";
 import { LoginDto, LoginResponseDto } from "./dto/logIn.dto";
-import { UserRes } from "./dto/user.dto";
+import { UserRes } from "./dto/userRes.dto";
 
 @ApiTags("Auth")
 @Controller("auth")
 export class AuthController {
   constructor(
-    private readonly jwtService: CustomJwtService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private jwtService: JwtService
   ) {}
 
   // Y==========================================
@@ -33,13 +33,15 @@ export class AuthController {
         role: user.role,
       };
 
-      const [accessToken, refreshToken] = await Promise.all([this.jwtService.generateToken(payload), this.jwtService.generateRefreshToken(payload)]);
+      const accessToken: string = await this.jwtService.signAsync(payload, {
+        secret: process.env.JWT_SECRET,
+        expiresIn: "1h",
+      });
 
       const userRes = toResponse(UserRes, user);
 
       return {
         accessToken,
-        refreshToken,
         user: userRes,
       };
     } catch (error) {

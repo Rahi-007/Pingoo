@@ -1,8 +1,6 @@
-import * as bcrypt from "bcryptjs";
-import { Injectable, NotFoundException, ConflictException } from "@nestjs/common";
 import { EntityManager } from "@mikro-orm/core";
-import { UpdateUserDto } from "../auth/dto/user.dto";
-import { IUser, UserSchema } from "../auth/entity/user.entity";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { IUser, UserSchema } from "../auth/entities/user.entity";
 
 @Injectable()
 export class UserService {

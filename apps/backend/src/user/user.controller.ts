@@ -1,15 +1,13 @@
 import { Controller, Delete, Get, HttpException, InternalServerErrorException, Param, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Roles } from "../auth/decorators/roles.decorator";
-import { UserRes } from "../auth/dto/user.dto";
+import { UserRes } from "../auth/dto/userRes.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
-import { Role } from "../utils/enums";
 import { toResponse } from "../utils/response";
 import { UserService } from "./user.service";
 
 @ApiTags("User")
-@ApiBearerAuth("JWT-auth")
+@ApiBearerAuth("JWT")
 @Controller("user")
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -120,7 +118,6 @@ export class UserController {
   // Y====================================================
   @Delete(":userName")
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
   @ApiOperation({ summary: "Delete user by User name (admin only)" })
   @ApiResponse({ status: 200, description: "User deleted successfully" })
   @ApiResponse({ status: 403, description: "Forbidden (only admin can access)" })

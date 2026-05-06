@@ -1,9 +1,6 @@
 import { INestApplication } from "@nestjs/common";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
-/**
- * Configures Swagger documentation for the API.
- */
 export function setupSwagger(app: INestApplication): void {
   const config = new DocumentBuilder()
     .setTitle("Pingoo")
@@ -17,9 +14,8 @@ export function setupSwagger(app: INestApplication): void {
         name: "Authorization",
         in: "header",
       },
-      "JWT-auth"
+      "JWT"
     )
-    .addCookieAuth("refreshToken")
     .addTag("Auth", "Authentication endpoints")
     .addTag("User", "User management endpoints")
     .addTag("Health", "Health check endpoints")
@@ -28,11 +24,10 @@ export function setupSwagger(app: INestApplication): void {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api-docs", app, document, {
     swaggerOptions: {
-      persistAuthorization: true,
-      docExpansion: "none",
       filter: true,
+      docExpansion: "none",
+      persistAuthorization: true,
       showRequestDuration: true,
     },
-    customSiteTitle: "Pingoo API Documentation",
   });
 }

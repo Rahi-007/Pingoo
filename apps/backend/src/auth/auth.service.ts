@@ -1,9 +1,9 @@
-import * as bcrypt from "bcryptjs";
-import { Injectable, ConflictException, UnauthorizedException } from "@nestjs/common";
-import { LoginDto } from "./dto/logIn.dto";
 import { EntityManager } from "@mikro-orm/core";
-import { UserSchema, IUser } from "./entity/user.entity";
+import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
+import * as bcrypt from "bcryptjs";
+import { LoginDto } from "./dto/logIn.dto";
 import { CreateUserDto } from "./dto/user.dto";
+import { IUser, UserSchema } from "./entities/user.entity";
 
 interface ICreateUserDto extends CreateUserDto {
   createdAt?: Date;
