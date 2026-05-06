@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional, PartialType } from "@nestjs/swagger";
 import { Expose, Transform } from "class-transformer";
-import { IsDate, IsDateString, IsEnum, IsInt, IsOptional, IsString, IsBoolean } from "class-validator";
+import { IsBoolean, IsDate, IsDateString, IsEnum, IsInt, IsOptional, IsString } from "class-validator";
 import { BloodGroup, Gender, Role } from "../../utils/enums";
 
 export class CreateUserDto {

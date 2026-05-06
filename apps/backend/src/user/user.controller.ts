@@ -1,27 +1,12 @@
-import {
-  Get,
-  Put,
-  Body,
-  Delete,
-  Param,
-  HttpCode,
-  Controller,
-  HttpStatus,
-  ParseIntPipe,
-  InternalServerErrorException,
-  ForbiddenException,
-  HttpException,
-  UseGuards,
-  Request,
-} from "@nestjs/common";
-import { Role } from "../utils/enums";
-import { UserService } from "./user.service";
-import { UpdateUserDto, UserRes } from "../auth/dto/user.dto";
+import { Controller, Delete, Get, HttpException, InternalServerErrorException, Param, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Roles } from "../auth/decorators/roles.decorator";
+import { UserRes } from "../auth/dto/user.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
-import { Roles } from "../auth/decorators/roles.decorator";
-import { IUser } from "../auth/entity/user.entity";
+import { Role } from "../utils/enums";
+import { toResponse } from "../utils/response";
+import { UserService } from "./user.service";
 
 @ApiTags("User")
 @ApiBearerAuth("JWT-auth")
@@ -77,7 +62,7 @@ export class UserController {
   async findOne(@Param("userName") userName: string): Promise<UserRes> {
     try {
       const user = await this.userService.findOne(userName);
-      return this.buildUserResponse(user);
+      return toResponse(UserRes, user);
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
@@ -151,27 +136,5 @@ export class UserController {
       }
       throw new InternalServerErrorException(`Failed to delete user: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
-  }
-
-  // Y----------{ User Response }-----------
-  private buildUserResponse(user: IUser): UserRes {
-    return {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName ?? "",
-      email: user.email,
-      phone: user.phone ?? "",
-      address: user.address ?? "",
-      role: user.role,
-      dob: user.dob ?? undefined,
-      lastLoggedIn: user.lastLoginAt ?? undefined,
-      gender: user.gender ?? "",
-      bloodGroup: user.bloodGroup ?? "",
-      avatar: user.avatar ?? "",
-      isVerified: user.isVerified ?? false,
-      isBlocked: user.isBlocked ?? false,
-      createdAt: user.createdAt ?? undefined,
-      updatedAt: (user.updatedAt as Date) ?? undefined,
-    };
   }
 }

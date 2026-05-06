@@ -1,21 +1,10 @@
-import {
-  Controller,
-  Post,
-  Get,
-  Body,
-  HttpCode,
-  HttpStatus,
-  UnauthorizedException,
-  InternalServerErrorException,
-  UseGuards,
-  Request,
-} from "@nestjs/common";
-import { CustomJwtService } from "../config/jwt/jwt.service";
-import { LoginDto, LoginResponseDto } from "./dto/logIn.dto";
-import { AuthService } from "./auth.service";
-import { UserRes } from "./dto/user.dto";
+import { Body, Controller, HttpCode, HttpStatus, InternalServerErrorException, Post, UnauthorizedException } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { IUser } from "./entity/user.entity";
+import { CustomJwtService } from "../config/jwt/jwt.service";
+import { toResponse } from "../utils/response";
+import { AuthService } from "./auth.service";
+import { LoginDto, LoginResponseDto } from "./dto/logIn.dto";
+import { UserRes } from "./dto/user.dto";
 
 @ApiTags("Auth")
 @Controller("auth")
@@ -46,7 +35,7 @@ export class AuthController {
 
       const [accessToken, refreshToken] = await Promise.all([this.jwtService.generateToken(payload), this.jwtService.generateRefreshToken(payload)]);
 
-      const userRes = this.buildUserResponse(user);
+      const userRes = toResponse(UserRes, user);
 
       return {
         accessToken,
@@ -135,25 +124,4 @@ export class AuthController {
   //     throw new UnauthorizedException("Invalid refresh token");
   //   }
   // }
-
-  private buildUserResponse(user: IUser): UserRes {
-    return {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName ?? "",
-      email: user.email,
-      phone: user.phone ?? "",
-      address: user.address ?? "",
-      role: user.role,
-      dob: user.dob ?? undefined,
-      lastLoggedIn: user.lastLoginAt ?? undefined,
-      gender: user.gender ?? "",
-      bloodGroup: user.bloodGroup ?? "",
-      avatar: user.avatar ?? "",
-      isVerified: user.isVerified ?? false,
-      isBlocked: user.isBlocked ?? false,
-      createdAt: user.createdAt ?? undefined,
-      updatedAt: (user.updatedAt as Date) ?? undefined,
-    };
-  }
 }
