@@ -1,8 +1,8 @@
 import { Controller, Delete, Get, HttpException, InternalServerErrorException, Param, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UserRes } from "../auth/dto/userRes.dto";
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
-import { RolesGuard } from "../auth/guards/roles.guard";
+import { JwtAuthGuard } from "../auth/guards/jwt.guard";
+import { RolesGuard } from "../auth/guards/role.guard";
 import { toResponse } from "../utils/response";
 import { UserService } from "./user.service";
 

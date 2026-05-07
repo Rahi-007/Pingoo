@@ -4,7 +4,6 @@ import * as dotenv from "dotenv";
 import { AppModule } from "./app.module";
 import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
 import { TimeoutInterceptor } from "./common/interceptors/timeout.interceptor";
-import { TransformInterceptor } from "./common/interceptors/transform.interceptor";
 import { setupCors } from "./config/cors.config";
 import { setupPipes } from "./config/pipe.config";
 import { setupSecurity } from "./config/security.config";
@@ -26,9 +25,7 @@ async function bootstrap() {
     setupCors(app);
 
     // Global prefix
-    app.setGlobalPrefix("api", {
-      exclude: ["/health", "/api-docs", "/api-docs-json"],
-    });
+    app.setGlobalPrefix("api");
 
     // Global validation pipe
     setupPipes(app);
@@ -37,10 +34,7 @@ async function bootstrap() {
     app.useGlobalFilters(new HttpExceptionFilter());
 
     // Global interceptors
-    app.useGlobalInterceptors(
-      new TransformInterceptor(),
-      new TimeoutInterceptor(10000) // 10 second timeout
-    );
+    app.useGlobalInterceptors(new TimeoutInterceptor(10000)); // 10 second timeout);
 
     // Swagger documentation
     setupSwagger(app);

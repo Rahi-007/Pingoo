@@ -3,7 +3,7 @@ import { JwtService } from "@nestjs/jwt";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { toResponse } from "../utils/response";
 import { AuthService } from "./auth.service";
-import { LoginDto, LoginResponseDto } from "./dto/logIn.dto";
+import { LoginDto, LoginRes } from "./dto/logIn.dto";
 import { UserRes } from "./dto/userRes.dto";
 
 @ApiTags("Auth")
@@ -19,11 +19,11 @@ export class AuthController {
   // Y==========================================
   @Post("login")
   @ApiOperation({ summary: "User login" })
-  @ApiResponse({ status: 200, description: "Login successful", type: LoginResponseDto })
+  @ApiResponse({ status: 200, description: "Login successful", type: LoginRes })
   @ApiResponse({ status: 401, description: "Invalid credentials" })
   @ApiResponse({ status: 500, description: "Internal server error" })
   @HttpCode(HttpStatus.OK)
-  async login(@Body() loginDto: LoginDto): Promise<LoginResponseDto> {
+  async login(@Body() loginDto: LoginDto): Promise<LoginRes> {
     try {
       const user = await this.authService.validateUser(loginDto);
 
@@ -60,11 +60,11 @@ export class AuthController {
   // @ApiResponse({
   //   status: 200,
   //   description: "Registration successful and auto login completed",
-  //   type: LoginResponseDto,
+  //   type: LoginRes,
   // })
   // @ApiResponse({ status: 409, description: "Email or phone already exists" })
   // @ApiResponse({ status: 500, description: "Internal server error" })
-  // async register(@Body() createUserDto: CreateUserDto): Promise<LoginResponseDto> {
+  // async register(@Body() createUserDto: CreateUserDto): Promise<LoginRes> {
   //   try {
   //     const newUser = await this.authService.create(createUserDto);
   //     const loggedInUser = await this.authService.updateLastLoggedIn(newUser);
@@ -84,46 +84,6 @@ export class AuthController {
   //     };
   //   } catch (error) {
   //     throw new Error(`Failed to register user: ${error instanceof Error ? error.message : "Unknown error"}`);
-  //   }
-  // }
-
-  // Y======================================
-  // Y------{ Refresh access token }--------
-  // Y======================================
-  // @Post("refresh")
-  // @ApiOperation({ summary: "Refresh access token using refresh token" })
-  // @ApiResponse({
-  //   status: 200,
-  //   description: "Token refreshed successfully",
-  //   type: LoginResponseDto,
-  // })
-  // @ApiResponse({ status: 401, description: "Invalid refresh token" })
-  // async refresh(@Body() body: { refreshToken: string }): Promise<LoginResponseDto> {
-  //   try {
-  //     const payload = await this.jwtService.validateToken(body.refreshToken);
-  //     if (!payload) {
-  //       throw new UnauthorizedException("Invalid refresh token");
-  //     }
-  //     const user = await this.userService.findOne(payload.sub);
-
-  //     const newPayload = {
-  //       sub: user.id,
-  //       userName: user.userName,
-  //       role: user.role,
-  //     };
-
-  //     const [accessToken, refreshToken] = await Promise.all([
-  //       this.jwtService.generateToken(newPayload),
-  //       this.jwtService.generateRefreshToken(newPayload),
-  //     ]);
-
-  //     return {
-  //       accessToken,
-  //       refreshToken,
-  //       user: this.buildUserResponse(user),
-  //     };
-  //   } catch (error) {
-  //     throw new UnauthorizedException("Invalid refresh token");
   //   }
   // }
 }

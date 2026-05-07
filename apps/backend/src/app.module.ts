@@ -1,9 +1,12 @@
 import { MikroOrmModule } from "@mikro-orm/nestjs";
+import { HttpModule } from "@nestjs/axios";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { TerminusModule } from "@nestjs/terminus";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
 import { AuthModule } from "./auth/auth.module";
 import { mikroOrmConfigFactory } from "./config/mikro-orm.config";
-import { HealthModule } from "./health/health.module";
 import { UserModule } from "./user/user.module";
 
 @Module({
@@ -12,11 +15,12 @@ import { UserModule } from "./user/user.module";
       isGlobal: true,
     }),
     MikroOrmModule.forRoot(mikroOrmConfigFactory()),
+    TerminusModule,
+    HttpModule,
     AuthModule,
     UserModule,
-    HealthModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
