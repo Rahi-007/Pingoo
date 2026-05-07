@@ -37,13 +37,12 @@ const LoginForm = () => {
   const onSubmit = async (values: LoginFormValues) => {
     try {
       const res = await login(values);
-      const { accessToken, refreshToken, user } = res.data;
+      const { accessToken, user } = res;
 
       localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("user", JSON.stringify(user));
       setAxiosAuthToken(accessToken);
-      dispatch(setAuth({ accessToken, refreshToken, user }));
+      dispatch(setAuth({ accessToken, user }));
 
       // Wait for Redux state to update before redirecting
       setTimeout(() => {

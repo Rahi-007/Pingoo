@@ -5,6 +5,7 @@ export interface IUser {
   id: number;
   firstName: string;
   lastName?: string;
+  userName?: string;
   phone?: string;
   email: string;
   address?: string;
@@ -27,8 +28,4 @@ export interface IAddUser {
   email: string;
   password: string;
   address?: string;
-}
-
-export interface IUserData {
-  data: IUser;
 }

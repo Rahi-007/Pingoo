@@ -12,18 +12,7 @@ export interface IRegisterPayload {
   password: string;
 }
 
-export interface ILoginResponseData {
+export interface ILoginRes {
   accessToken: string;
-  refreshToken: string;
   user: IUser;
-}
-
-// API response format
-export interface ILoginResponse {
-  success: boolean;
-  message: string;
-  data: ILoginResponseData;
-  timestamp: string;
-  path: string;
-  statusCode?: number;
 }

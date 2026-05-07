@@ -17,6 +17,10 @@ export class UserRes {
 
   @Expose()
   @IsString()
+  userName!: string;
+
+  @Expose()
+  @IsString()
   phone?: string;
 
   @Expose()

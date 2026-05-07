@@ -1,29 +1,29 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect } from "react";
-import { LogOut } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { logout } from "@/service/auth.service";
-import { getUserById } from "@/service/user.service";
-import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { clearAuth } from "@/context/slice/auth.slice";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import useAsyncAction from "@/hooks/useAsyncAction";
-import { SearchBar } from "./SearchBar";
 import { timeAgo } from "@/lib/utils";
+import { logout } from "@/service/auth.service";
+import { getUserByUserName } from "@/service/user.service";
+import { LogOut } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { SearchBar } from "./SearchBar";
 
 const ProfileSection = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const userId = useAppSelector(state => state.auth.user?.id);
-  const fnLoadProfile = useAsyncAction(getUserById);
-  const data = fnLoadProfile.data?.data;
+  const userName = useAppSelector(state => state.auth.user?.userName);
+  const fnLoadProfile = useAsyncAction(getUserByUserName);
+  const data = fnLoadProfile.data;
 
   useEffect(() => {
-    if (userId) {
-      fnLoadProfile.action(Number(userId));
+    if (userName) {
+      fnLoadProfile.action(userName);
     }
-  }, [userId]);
+  }, [userName]);
 
   return (
     <div className="p-4 relative min-h-screen">
