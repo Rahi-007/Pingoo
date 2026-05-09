@@ -1,8 +1,8 @@
 "use client";
 
+import { TooltipProvider } from "@/components/ui/tooltip";
 import Providers from "./storeProvider";
 import { ThemeProvider } from "./themeProvider";
-import { TooltipProvider } from "@/components/ui/tooltip";
 
 export default function ProviderConfig({ children }: { children: React.ReactNode }) {
   return (
