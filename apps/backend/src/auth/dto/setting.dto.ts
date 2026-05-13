@@ -1,9 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Expose } from "class-transformer";
-import { IsNotEmpty, IsString } from "class-validator";
-import { UserRes } from "./userRes.dto";
+import { IsDate, IsNotEmpty, IsString } from "class-validator";
 
-// DTOs for authentication
+//R DTOs for authentication
 export class SettingDto {
   @IsString()
   @ApiProperty({
@@ -28,5 +27,17 @@ export class SettingRes {
 
   @Expose()
   @IsString()
-  value!: UserRes;
+  value!: string;
+
+  @Expose()
+  @IsString()
+  oldValue?: string;
+
+  @Expose()
+  @IsDate()
+  createdAt!: Date;
+
+  @Expose()
+  @IsDate()
+  updatedAt?: Date;
 }

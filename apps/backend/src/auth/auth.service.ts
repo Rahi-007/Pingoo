@@ -2,7 +2,9 @@ import { EntityManager } from "@mikro-orm/core";
 import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
 import * as bcrypt from "bcryptjs";
 import { LoginDto } from "./dto/logIn.dto";
+import { SettingDto, SettingRes } from "./dto/setting.dto";
 import { CreateUserDto } from "./dto/user.dto";
+import { SettingSchema } from "./entities/setting.entity";
 import { IUser, UserSchema } from "./entities/user.entity";
 
 interface ICreateUserDto extends CreateUserDto {
@@ -77,6 +79,37 @@ export class AuthService {
 
     await this.em.flush();
     return user;
+  }
+
+  // System setting
+  async updateSettings(settingDto: SettingDto): Promise<SettingRes> {
+    let setting = await this.em.findOne(SettingSchema, {
+      key: settingDto.key,
+    });
+
+    // create
+    if (!setting) {
+      setting = this.em.create(SettingSchema, {
+        key: settingDto.key,
+        value: settingDto.value,
+        createdAt: new Date(),
+      });
+    } else {
+      setting.oldValue = setting.value;
+      setting.value = settingDto.value;
+      setting.updatedAt = new Date();
+    }
+
+    this.em.persist(setting);
+    await this.em.flush();
+
+    return {
+      key: setting.key,
+      value: setting.value,
+      oldValue: setting.oldValue,
+      createdAt: setting.createdAt,
+      updatedAt: setting.updatedAt,
+    };
   }
 
   // Y---------{ Update last login }------------------

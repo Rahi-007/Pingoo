@@ -1,9 +1,10 @@
-import { Body, Controller, HttpCode, HttpStatus, InternalServerErrorException, Post, UnauthorizedException } from "@nestjs/common";
+import { Body, Controller, HttpCode, HttpStatus, InternalServerErrorException, Post, Put, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { toResponse } from "../utils/response";
 import { AuthService } from "./auth.service";
 import { LoginDto, LoginRes } from "./dto/logIn.dto";
+import { SettingDto, SettingRes } from "./dto/setting.dto";
 import { UserRes } from "./dto/userRes.dto";
 
 @ApiTags("Auth")
@@ -86,4 +87,25 @@ export class AuthController {
   //     throw new Error(`Failed to register user: ${error instanceof Error ? error.message : "Unknown error"}`);
   //   }
   // }
+
+  // Y=======================================================
+  // Y-------------{ System Setting endpoint }---------------
+  // Y=======================================================
+  @Put("system-setting")
+  @ApiOperation({ summary: "Update System Settings" })
+  @ApiResponse({ status: 200, description: "Update successful", type: SettingRes })
+  @ApiResponse({ status: 500, description: "Internal server error" })
+  async updateSetting(@Body() settingDto: SettingDto): Promise<SettingRes> {
+    try {
+      const setting = await this.authService.updateSettings(settingDto);
+      const settingRes = toResponse(SettingRes, setting);
+
+      return settingRes;
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        throw error;
+      }
+      throw new InternalServerErrorException("Something went wrong");
+    }
+  }
 }

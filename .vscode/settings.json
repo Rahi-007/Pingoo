@@ -21,6 +21,6 @@
   },
   "[typescript]": {
     "editor.formatOnSave": false,
-    "editor.defaultFormatter": null,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
 }
