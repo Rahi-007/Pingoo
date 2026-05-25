@@ -21,7 +21,7 @@ const ProfileSection = () => {
       <h1 className="text-2xl">
         {data?.firstName || "User name"} {data?.lastName || ""}
       </h1>
-      <div className="py-3">
+      <div className="py-4">
         <SearchBar />
       </div>
       <div className="p-4 flex justify-center items-center">

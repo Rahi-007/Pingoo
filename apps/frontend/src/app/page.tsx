@@ -17,7 +17,7 @@ export default function Home() {
       <div className="w-full sm:w-150 md:w-160 lg:w-170 xl:w-177 xxl:w-7xl border-x min-h-screen">
         <ControlBar value={activeView} />
       </div>
-      <div className="hidden sm:flex justify-center items-center w-full min-h-screen">
+      <div className="w-full">
         <MainPanel value={activeView} />
       </div>
     </div>

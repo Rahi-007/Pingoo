@@ -37,11 +37,11 @@ const SystemSettingForm = ({ websiteName }: IProps) => {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 border-2 rounded-md w-100">
-        <h1 className="text-2xl py-4">Login Form</h1>
-        <div className="px-4">
-          <GInput.Form type="text" name="websiteName" label="User Name" control={form.control} placeholder="user name" className="mb-4" />
+    <div className="flex justify-center items-center min-h-screen p-4">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 border-2 rounded-md w-100">
+          <h1 className="text-2xl py-2 mb-4">System Settings Form</h1>
+          <GInput.Form type="text" name="websiteName" label="Site Name" control={form.control} placeholder="Site name" className="mb-4" />
 
           <div className="flex justify-end">
             <Button type="submit" disabled={form.formState.isSubmitting}>
@@ -58,9 +58,9 @@ const SystemSettingForm = ({ websiteName }: IProps) => {
               )} */}
             </Button>
           </div>
-        </div>
-      </form>
-    </Form>
+        </form>
+      </Form>
+    </div>
   );
 };
 

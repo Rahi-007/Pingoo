@@ -16,7 +16,7 @@ const DefaultDashboard = () => {
     },
   ];
   return (
-    <div className="hidden md:flex gap-4 px-8 lg:px-4 xl:px-0">
+    <div className="hidden md:flex justify-center items-center gap-4 px-8 lg:px-4 xl:px-0 min-h-screen">
       <Card className="h-[55vh] lg:h-[50vh] border-0 group cursor-pointer">
         <CardContent className="flex flex-col items-center text-(--color-sidebar-primary) py-8 px-14">
           <MessageCircleHeart className="w-26 h-26 hover-effect" />
