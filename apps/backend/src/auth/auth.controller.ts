@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, InternalServerErrorException, Post, Put, UnauthorizedException } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, InternalServerErrorException, Post, Put, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { toResponse } from "../utils/response";
@@ -91,6 +91,24 @@ export class AuthController {
   // Y=======================================================
   // Y-------------{ System Setting endpoint }---------------
   // Y=======================================================
+  @Get("system-setting")
+  @ApiOperation({ summary: "Get System Settings" })
+  @ApiResponse({ status: 200, description: "Get successful", type: SettingRes })
+  @ApiResponse({ status: 500, description: "Internal server error" })
+  async getSetting(): Promise<SettingRes[]> {
+    try {
+      const setting = await this.authService.getSettings();
+      const settingRes = toResponse(SettingRes, setting);
+
+      return settingRes;
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        throw error;
+      }
+      throw new InternalServerErrorException("Something went wrong");
+    }
+  }
+
   @Put("system-setting")
   @ApiOperation({ summary: "Update System Settings" })
   @ApiResponse({ status: 200, description: "Update successful", type: SettingRes })

@@ -25,4 +25,8 @@ export const API_URLS = {
     update: (id: number) => api(`user/${id}`),
     delete: (id: number) => api(`user/${id}`),
   },
+  setting: {
+    all: () => api("user"),
+    update: () => api(`user`),
+  },
 };

@@ -3,6 +3,8 @@
 import GInput from "@/components/generic/GInput";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import useAsyncAction from "@/hooks/useAsyncAction";
+import { editSetting } from "@/service/setting.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -19,6 +21,7 @@ const SystemSettingSchema = z.object({
 type SystemSettingFormValues = z.infer<typeof SystemSettingSchema>;
 
 const SystemSettingForm = ({ websiteName }: IProps) => {
+  const fnUpdateSetting = useAsyncAction(editSetting);
   const form = useForm<SystemSettingFormValues>({
     resolver: zodResolver(SystemSettingSchema),
     defaultValues: {
@@ -28,7 +31,12 @@ const SystemSettingForm = ({ websiteName }: IProps) => {
 
   const onSubmit = async (values: SystemSettingFormValues) => {
     try {
-      //   const res = await login(values);
+      for (const [key, value] of Object.entries(values)) {
+        await fnUpdateSetting.action({
+          key,
+          value,
+        });
+      }
 
       console.log("System Updated Successful 🎉", values);
     } catch (error: unknown) {

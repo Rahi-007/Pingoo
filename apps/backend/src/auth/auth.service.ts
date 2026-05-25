@@ -81,6 +81,19 @@ export class AuthService {
     return user;
   }
 
+  // Get all system settings
+  async getSettings(): Promise<SettingRes[]> {
+    const settings = await this.em.find(SettingSchema, {});
+
+    return settings.map(setting => ({
+      key: setting.key,
+      value: setting.value,
+      oldValue: setting.oldValue,
+      createdAt: setting.createdAt,
+      updatedAt: setting.updatedAt,
+    }));
+  }
+
   // System setting
   async updateSettings(settingDto: SettingDto): Promise<SettingRes> {
     let setting = await this.em.findOne(SettingSchema, {
