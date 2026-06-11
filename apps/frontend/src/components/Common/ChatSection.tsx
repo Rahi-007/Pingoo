@@ -4,7 +4,11 @@ import MenuButton from "./Menu";
 import { UserPlus } from "lucide-react";
 import { SearchBar } from "./SearchBar";
 
-const ChatSection = () => {
+interface IProps {
+  setShowHome: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ChatSection = ({ setShowHome }: IProps) => {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center">
@@ -15,7 +19,7 @@ const ChatSection = () => {
           <Link href="/" className="p-1.5 rounded-full hover:bg-gray-700/30 transition-colors">
             <UserPlus className="w-6 h-6" />
           </Link>
-          <MenuButton />
+          <MenuButton setValue={setShowHome} />
         </div>
       </div>
       <div className="py-3">

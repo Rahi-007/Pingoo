@@ -6,10 +6,11 @@ import { ViewType } from "./Sidebar";
 
 interface IProps {
   value: ViewType;
+  setShowHome: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ControlBar = ({ value }: IProps) => {
-  if (value === "chat") return <ChatSection />;
+const ControlBar = ({ value, setShowHome }: IProps) => {
+  if (value === "chat") return <ChatSection setShowHome={setShowHome} />;
   if (value === "archive") return <ArchiveSection />;
   if (value === "settings") return <SettingSection />;
   if (value === "profile") return <ProfileSection />;

@@ -7,10 +7,10 @@ import { setAxiosAuthToken } from "@/service/auth.service";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
+import HomeCard from "@/components/Common/HomeCard";
 
 export default function Root({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
@@ -23,32 +23,30 @@ export default function Root({ children }: { children: React.ReactNode }) {
       }
 
       if (!accessToken || !userString) {
-        router.replace("/login");
-
         // force 2 sec delay
         setTimeout(() => {
           setChecking(false);
         }, 2000);
-        return;
+        return <HomeCard />;
       }
 
       try {
         const user = JSON.parse(userString) as IUser;
         dispatch(setAuth({ accessToken, user }));
       } catch {
-        router.replace("/login");
+        return <HomeCard />;
       } finally {
         setChecking(false);
       }
     };
 
     runAuth();
-  }, [dispatch, router]);
+  }, [dispatch]);
 
   // block ui until check is done
   if (checking) {
     return <Loading />;
+  } else {
+    return <>{children}</>;
   }
-
-  return <>{children}</>;
 }

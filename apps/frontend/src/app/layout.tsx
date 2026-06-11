@@ -31,7 +31,9 @@ export default function RootLayout({ children }: Readonly<IProps>) {
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className={`${salsa.variable} ${roboto.variable} antialiased`}>
         <ProviderConfig>
-          <Root>{children}</Root>
+          {/* <Root> */}
+          {children}
+          {/* </Root> */}
         </ProviderConfig>
       </body>
     </html>
