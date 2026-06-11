@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowDownToLine, MessageCircleHeart, MonitorSmartphone } from "lucide-react";
+import { ArrowDownToLine, ArrowUpRight, MessageCircleHeart, MonitorSmartphone, ShieldCheck, UserLock } from "lucide-react";
 import Link from "next/link";
 
 const HomeCard = () => {
@@ -16,13 +16,13 @@ const HomeCard = () => {
         <Card className="border mt-16 w-auto">
           <CardContent className="flex items-center text-neutral-400 px-8 gap-14">
             <MonitorSmartphone className="w-24 h-24" />
-            <div className="">
-              <h1 className="text-2xl pt-4 pb-1">Download Pingoo for windows</h1>
+            <div>
+              <h1 className="text-3xl pb-1">Download Pingoo for windows</h1>
               <p className="text-sm">Get extra features like Open chat hand, get notification all time and more...</p>
             </div>
-            <div className="flex gap-0.5 items-center border rounded-4xl px-4 py-2">
-              <span className="">Get Download</span>
-              <ArrowDownToLine className="w-4 h-4" />
+            <div className="flex gap-0.5 items-center border rounded-4xl px-4 py-2 group cursor-pointer">
+              <span className="hover-effect">Get Download</span>
+              <ArrowDownToLine className="w-4 h-4 hover-effect" />
             </div>
           </CardContent>
         </Card>
@@ -48,30 +48,46 @@ const HomeCard = () => {
                     <span>Scan the QR code again to link your account.</span>
                   </li>
                 </ol>
-                <span className="border-b-4 w-full">Need Help?</span>
+                <Link href="/login" className="text-neutral-400 border-b-2 border-b-slate-700 hover-effect hover:text-gray-300 hover:border-b-gray-400">
+                  Need Help?
+                </Link>
                 <div className="mt-6 flex gap-2 items-center">
                   <Checkbox className="" />
                   <span>Stay login on this browser</span>
                 </div>
               </div>
               <div className="col-span-4">
-                <div className="w-50 h-50 border-2 border-dashed rounded-xl flex flex-col items-center justify-center mt-6">
-                  <span className="text-sm text-neutral-500">QR Code is</span>
-                  <span className="text-sm text-neutral-500">under construction</span>
+                <div className="w-50 h-50 border-2 border-dashed rounded-xl flex flex-col items-center justify-center mt-6 group">
+                  <span className="text-sm text-neutral-500 hover-effect">QR Code is</span>
+                  <span className="text-sm text-neutral-500 hover-effect">under construction</span>
                 </div>
-                <div className="mt-2">
-                  <Link href="/login" className="text-neutral-400">
-                    login with phone number {">"}
+                <div className="mt-2 px-1">
+                  <Link href="/login" className="text-neutral-400 border-b-2 border-b-slate-700 hover-effect hover:text-gray-300 hover:border-b-gray-400">
+                    login with phone number {" >"}
                   </Link>
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
-        <div className="text-neutral-400 mt-39">
-          <p>Trams & Conditions...</p>
+        <div className="text-neutral-400 text-center mt-6">
+          <p>
+            Don't have Pingoo account?
+            <Link href="/login" className="border-b-2 border-b-slate-700 ml-1.5 inline-flex hover-effect hover:text-gray-300 hover:border-b-gray-400">
+              Get started
+              <ArrowUpRight className="w-5 h-5" />
+            </Link>
+          </p>
+          
+          <p className="flex gap-2 mt-4 justify-center items-center text-xs">
+            <ShieldCheck className="w-4 h-4" />
+            Private & encrypted. Only you and the recipient can read the messages
+          </p>
         </div>
       </div>
+      <p className="text-neutral-400 text-right text-xs mt-20">
+        <Link href="/">Trams & Conditions...</Link>
+      </p>
     </div>
   );
 };
