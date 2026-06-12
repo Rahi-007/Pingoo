@@ -2,15 +2,13 @@
 
 import { z } from "zod";
 import { useState } from "react";
-import { motion } from "motion/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { login, setAxiosAuthToken } from "@/service/auth.service";
+import { login } from "@/service/auth.service";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-import { fadeUpAnimation } from "@/lib/motion.utils";
 import { setAuth } from "@/context/slice/auth.slice";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, LogIn } from "lucide-react";
+import { LogIn } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import GInput from "@/components/generic/GInput";
@@ -40,16 +38,12 @@ const LoginForm = () => {
       const { accessToken, user } = res;
 
       localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("user", JSON.stringify(user));
-      setAxiosAuthToken(accessToken);
+      localStorage.setItem("userId", `${user?.userName}`);
+
       dispatch(setAuth({ accessToken, user }));
-
-      // Wait for Redux state to update before redirecting
-      setTimeout(() => {
-        router.replace("/");
-      }, 100);
-
-      console.log("Welcome Back 🎉");
+      dispatch(setAuth({ accessToken, user }));
+      router.replace("/");
+      router.refresh();
     } catch (error: unknown) {
       console.error(error instanceof Error ? error.message : String(error));
     }

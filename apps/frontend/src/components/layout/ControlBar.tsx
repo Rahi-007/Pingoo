@@ -13,7 +13,7 @@ const ControlBar = ({ value, setShowHome }: IProps) => {
   if (value === "chat") return <ChatSection setShowHome={setShowHome} />;
   if (value === "archive") return <ArchiveSection />;
   if (value === "settings") return <SettingSection />;
-  if (value === "profile") return <ProfileSection />;
+  if (value === "profile") return <ProfileSection setValue={setShowHome} />;
 };
 
 export default ControlBar;

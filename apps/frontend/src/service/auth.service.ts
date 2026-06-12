@@ -2,14 +2,6 @@ import axios, { AxiosResponse } from "axios";
 import { API_URLS } from "@/config/configURL";
 import { ILoginPayload, ILoginRes, IRegisterPayload } from "@/interface/auth.interface";
 
-export function setAxiosAuthToken(accessToken: string | null) {
-  if (accessToken) {
-    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-  } else {
-    delete axios.defaults.headers.common.Authorization;
-  }
-}
-
 export function login(data: ILoginPayload) {
   return new Promise<ILoginRes>(async (resolve, reject) => {
     try {
@@ -37,7 +29,6 @@ export function logout() {
     window.localStorage.removeItem("accessToken");
     window.localStorage.removeItem("refreshToken");
     window.localStorage.removeItem("user");
+    window.localStorage.removeItem("userId");
   }
-
-  setAxiosAuthToken(null);
 }

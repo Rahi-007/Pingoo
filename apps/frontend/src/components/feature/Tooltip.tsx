@@ -1,6 +1,5 @@
 import React from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import Image from "next/image";
 
 interface IProps {
   title: string;
@@ -12,7 +11,6 @@ const GToolTip = ({ title, children, side }: IProps) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>{children}</TooltipTrigger>
-
       <TooltipContent side={side ?? `right`}>{title}</TooltipContent>
     </Tooltip>
   );

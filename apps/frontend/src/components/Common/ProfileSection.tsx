@@ -2,18 +2,20 @@
 
 import { useGetUserByNameQuery } from "@/context/rtk-query";
 import { clearAuth } from "@/context/slice/auth.slice";
-import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import { timeAgo } from "@/lib/utils";
 import { logout } from "@/service/auth.service";
 import { LogOut } from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { SearchBar } from "./SearchBar";
+import Image from "next/image";
 
-const ProfileSection = () => {
-  const router = useRouter();
+interface IProps {
+  setValue: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ProfileSection = ({ setValue }: IProps) => {
   const dispatch = useAppDispatch();
-  const userName = useAppSelector(state => state.auth.user?.userName);
+  const userName = localStorage.getItem("userId");
   const { data } = useGetUserByNameQuery(`${userName}`);
 
   return (
@@ -69,9 +71,8 @@ const ProfileSection = () => {
       <div
         onClick={() => {
           logout();
+          setValue(true);
           dispatch(clearAuth());
-          router.replace("/login");
-          console.log("You are logged out");
         }}
         className="absolute bottom-1 mb-2 w-[93%] flex items-center gap-2 text-red-500 cursor-pointer transition-colors delay-75 hover:bg-[#252828] rounded-sm px-2 py-2.5"
       >

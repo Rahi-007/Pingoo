@@ -36,8 +36,8 @@ const MenuButton = ({ setValue }: IProps) => {
           className="flex items-center gap-2 text-red-500 cursor-pointer hover-bg-effect"
           onClick={() => {
             logout();
-            dispatch(clearAuth());
             setValue(true);
+            dispatch(clearAuth());
           }}
         >
           <LogOut className="w-4 h-4" />

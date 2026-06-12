@@ -1,52 +1,40 @@
 "use client";
 
-import { setAuth } from "@/context/slice/auth.slice";
-import { useAppDispatch } from "@/hooks/reduxHooks";
-import { IUser } from "@/interface/user.interface";
-import { setAxiosAuthToken } from "@/service/auth.service";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import Loading from "./loading";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import HomeCard from "@/components/Common/HomeCard";
 
 export default function Root({ children }: { children: React.ReactNode }) {
-  const dispatch = useAppDispatch();
+  const pathname = usePathname();
   const [checking, setChecking] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    const runAuth = () => {
-      const accessToken = localStorage.getItem("accessToken");
-      const userString = localStorage.getItem("user");
+    const accessToken = localStorage.getItem("accessToken");
+    const userId = localStorage.getItem("userId");
 
-      if (accessToken) {
-        setAxiosAuthToken(accessToken);
-      }
+    if (accessToken && userId) {
+      setAuthenticated(true);
+    }
 
-      if (!accessToken || !userString) {
-        // force 2 sec delay
-        setTimeout(() => {
-          setChecking(false);
-        }, 2000);
-        return <HomeCard />;
-      }
+    setChecking(false);
+  }, []);
 
-      try {
-        const user = JSON.parse(userString) as IUser;
-        dispatch(setAuth({ accessToken, user }));
-      } catch {
-        return <HomeCard />;
-      } finally {
-        setChecking(false);
-      }
-    };
+  const publicRoutes = ["/login", "/register"];
+  const isPublicRoute = publicRoutes.includes(pathname);
 
-    runAuth();
-  }, [dispatch]);
-
-  // block ui until check is done
   if (checking) {
     return <Loading />;
-  } else {
+  }
+
+  if (isPublicRoute) {
     return <>{children}</>;
   }
+
+  if (!authenticated) {
+    return <HomeCard />;
+  }
+
+  return <>{children}</>;
 }
