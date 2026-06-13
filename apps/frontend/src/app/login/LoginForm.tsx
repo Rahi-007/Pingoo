@@ -4,7 +4,6 @@ import { z } from "zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { login } from "@/service/auth.service";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { setAuth } from "@/context/slice/auth.slice";
 import { useRouter } from "next/navigation";
@@ -12,6 +11,7 @@ import { LogIn } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import GInput from "@/components/generic/GInput";
+import { useLoginMutation } from "@/service/auth.service";
 
 const LoginSchema = z.object({
   userName: z.string().min(3, { message: "Password must be at least 6 characters" }),
@@ -23,6 +23,7 @@ type LoginFormValues = z.infer<typeof LoginSchema>;
 const LoginForm = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [login] = useLoginMutation();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -34,18 +35,17 @@ const LoginForm = () => {
 
   const onSubmit = async (values: LoginFormValues) => {
     try {
-      const res = await login(values);
+      const res = await login(values).unwrap();
       const { accessToken, user } = res;
 
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("userId", `${user?.userName}`);
 
       dispatch(setAuth({ accessToken, user }));
-      dispatch(setAuth({ accessToken, user }));
       router.replace("/");
       router.refresh();
-    } catch (error: unknown) {
-      console.error(error instanceof Error ? error.message : String(error));
+    } catch (err) {
+      console.error(err);
     }
   };
 

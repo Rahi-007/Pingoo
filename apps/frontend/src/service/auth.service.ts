@@ -1,28 +1,17 @@
-import axios, { AxiosResponse } from "axios";
-import { API_URLS } from "@/config/configURL";
-import { ILoginPayload, ILoginRes, IRegisterPayload } from "@/interface/auth.interface";
+import { ILoginPayload, ILoginRes } from "@/interface/auth.interface";
+import { RTKApi } from "@/context/rtk-query";
 
-export function login(data: ILoginPayload) {
-  return new Promise<ILoginRes>(async (resolve, reject) => {
-    try {
-      const response = await axios.post<any, AxiosResponse<ILoginRes>>(API_URLS.auth.login(), data);
-      resolve(response.data);
-    } catch (error: any) {
-      reject(error.response?.data?.message || "Something went wrong");
-    }
-  });
-}
-
-export function register(data: IRegisterPayload) {
-  return new Promise<ILoginRes>(async (resolve, reject) => {
-    try {
-      const response = await axios.post<any, AxiosResponse<ILoginRes>>(API_URLS.auth.register(), data);
-      resolve(response.data);
-    } catch (error: any) {
-      reject(error.response?.data?.message || "Something went wrong");
-    }
-  });
-}
+export const authApi = RTKApi.injectEndpoints({
+  endpoints: build => ({
+    login: build.mutation<ILoginRes, ILoginPayload>({
+      query: data => ({
+        url: "auth/login",
+        method: "POST",
+        body: data,
+      }),
+    }),
+  }),
+});
 
 export function logout() {
   if (typeof window !== "undefined") {
@@ -32,3 +21,5 @@ export function logout() {
     window.localStorage.removeItem("userId");
   }
 }
+
+export const { useLoginMutation } = authApi;

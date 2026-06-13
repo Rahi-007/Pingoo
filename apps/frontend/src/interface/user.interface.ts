@@ -1,6 +1,5 @@
 //W---------={ Interface }=----------</br>
 
-// Matches backend UserRes (Fuel Station Backend/src/auth/dto/user.dto.ts)
 export interface IUser {
   id: number;
   firstName: string;

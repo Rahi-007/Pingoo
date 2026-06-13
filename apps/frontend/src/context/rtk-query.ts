@@ -1,8 +1,6 @@
 import { BASE_URL } from "@/config/const";
-import { IUser } from "@/interface/user.interface";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-//R---------{base URL and expected endpoints}------------R//
 export const RTKApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
@@ -17,11 +15,6 @@ export const RTKApi = createApi({
       return headers;
     },
   }),
-  endpoints: build => ({
-    getUserByName: build.query<IUser, string>({
-      query: name => `user/${name}`,
-    }),
-  }),
+  tagTypes: ["Setting"],
+  endpoints: () => ({}),
 });
-
-export const { useGetUserByNameQuery } = RTKApi;

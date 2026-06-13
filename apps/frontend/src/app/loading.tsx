@@ -8,7 +8,6 @@ export default function Loading() {
 
   useEffect(() => {
     let value = 0;
-
     const interval = setInterval(() => {
       value += Math.random() * 10;
 

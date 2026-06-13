@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetUserByNameQuery } from "@/context/rtk-query";
+import { useGetUserByNameQuery } from "@/service/user.service";
 import { clearAuth } from "@/context/slice/auth.slice";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { timeAgo } from "@/lib/utils";
